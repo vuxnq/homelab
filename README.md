@@ -1,5 +1,5 @@
 # sheol
-fedora server 
+[fedora server](https://fedoraproject.org/server/)
 
 ## requirements
 
@@ -51,6 +51,7 @@ cd ~/sheol
 
 ```sh
 # TODO: add .env.secret to directories
+# TODO: add data/ to directories
 ```
 
 ```sh

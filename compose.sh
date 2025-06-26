@@ -4,8 +4,7 @@ set -e
 
 ACTION=${1:-up}
 
-# SERVICES=("immich" "portainer")
-SERVICES=("immich")
+SERVICES=("glance" "immich")
 
 for service in "${SERVICES[@]}"; do
   echo "docker compose $ACTION - $service"

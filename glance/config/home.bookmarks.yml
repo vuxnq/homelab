@@ -1,0 +1,54 @@
+- type: bookmarks
+  groups:
+    - title: school
+      color: 41 86 83
+      same-tab: true
+      links:
+        - title: lms
+          url: https://lms.vsb.cz
+        - title: kelvin
+          url: https://kelvin.cs.vsb.cz
+        - title: mail
+          url: https://posta.vsb.cz/roundcube
+        - title: edison
+          url: https://edison.sso.vsb.cz/wps/myportal/student
+    - title: productivity
+      color: 115 54 76
+      same-tab: true
+      links:
+        - title: pairdrop
+          url: https://pairdrop.net
+        - title: filen
+          url: https://app.filen.io
+        - title: icloud
+          url: https://icloud.com
+        - title: gmail
+          url: https://mail.google.com
+        - title: github
+          url: https://github.com/vuxnq
+        - title: ente auth
+          url: https://auth.ente.io
+    - title: social
+      color: 217 92 76
+      same-tab: true
+      links:
+        - title: last.fm
+          url: https://last.fm/user/vuxnq
+        - title: reddit
+          url: https://reddit.com
+        - title: instagram
+          url: https://instagram.com
+        - title: messenger
+          url: https://messenger.com
+        - title: facebook
+          url: https://facebook.com
+        - title: twitter
+          url: https://twitter.com
+    - title: entertainment
+      color: 267 84 81
+      same-tab: true
+      links:
+        - title: youtube
+          url: https://youtube.com
+        - title: fmhy
+          url: https://fmhy.net

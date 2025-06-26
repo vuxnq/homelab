@@ -1,0 +1,29 @@
+- name: home
+  columns:
+    - size: small
+      widgets:
+        - type: group
+          widgets:
+            - type: clock
+            - type: server-stats
+              servers:
+                - type: local
+        - type: weather
+          hour-format: 24h
+          location: Ostrava, Czechia
+    - size: full
+      widgets:
+        - type: search
+          search-engine: google
+          autofocus: true
+          bangs:
+            - title: youtube
+              shortcut: "!yt"
+              url: https://www.youtube.com/results?search_query={QUERY}
+        $include: home.bookmarks.yml
+        - type: monitor
+          sites:
+            - title: immich
+              icon: di:immich
+              url: http://immich.local.vuxnq.me
+              check-url: http://localhost:2283

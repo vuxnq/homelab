@@ -1,0 +1,30 @@
+- name: news
+  columns:
+    - size: full
+      widgets:
+        - type: rss
+          style: detailed-list
+          feeds:
+            - url: https://feeds.bloomberg.com/markets/news.rss
+            - url: https://selfh.st/rss/
+            - url: https://ciechanow.ski/atom.xml
+            - url: https://www.joshwcomeau.com/rss.xml
+        - type: split-column
+          widgets:
+            - type: hacker-news
+            - type: lobsters
+        - type: split-column
+          max-columns: 3
+          widgets:
+            - type: reddit
+              subreddit: selfhosted
+            - type: reddit
+              subreddit: homelab
+            - type: reddit
+              subreddit: linux
+            - type: reddit
+              subreddit: datahoarding
+            - type: reddit
+              subreddit: privacy
+            - type: reddit
+              subreddit: sysadmin

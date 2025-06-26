@@ -1,0 +1,14 @@
+branding:
+  custom-footer: <p>sheol</p>
+  favicon-url: https://raw.githubusercontent.com/vuxnq/website/refs/heads/main/assets/favicon/favicon.ico
+
+theme:
+  contrast-multiplier: 1.2
+  background-color: 240 23 9
+  primary-color: 232 97 85
+  positive-color: 115 54 76
+  negative-color: 343 81 75
+
+pages:
+  - $include: home.yml
+  - $include: news.yml
