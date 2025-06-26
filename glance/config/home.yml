@@ -1,29 +1,36 @@
 - name: home
+  head-widgets:
+    - type: search
+      hide-header: true
+      search-engine: google
+      autofocus: true
+      bangs:
+        - title: youtube
+          shortcut: "!yt"
+          url: https://www.youtube.com/results?search_query={QUERY}
   columns:
     - size: small
       widgets:
-        - type: group
-          widgets:
-            - type: clock
-            - type: server-stats
-              servers:
-                - type: local
+        - type: clock
+          hide-header: true
         - type: weather
+          hide-header: true
           hour-format: 24h
           location: Ostrava, Czechia
+        - type: calendar
+          hide-header: true
+    - size: small
+      widgets:
+        - type: server-stats
+          hide-header: true
+          servers:
+            - type: local
+              name: sheol
+        $include: home.lastfm.yml
+        - type: to-do
+          hide-header: true
     - size: full
       widgets:
-        - type: search
-          search-engine: google
-          autofocus: true
-          bangs:
-            - title: youtube
-              shortcut: "!yt"
-              url: https://www.youtube.com/results?search_query={QUERY}
         $include: home.bookmarks.yml
-        - type: monitor
-          sites:
-            - title: immich
-              icon: di:immich
-              url: http://immich.local.vuxnq.me
-              check-url: http://localhost:2283
+        - type: docker-containers
+          hide-header: true

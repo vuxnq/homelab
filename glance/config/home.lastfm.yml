@@ -1,0 +1,27 @@
+- type: custom-api
+  hide-header: true
+  title: last.fm
+  cache: 60s
+  url: http://ws.audioscrobbler.com/2.0/
+  parameters:
+    method: user.getRecentTracks
+    format: json
+    limit: 1
+    user: ${LASTFM_USERNAME}
+    api_key: ${LASTFM_API_KEY}
+  template: |
+    {{ $track := index ( .JSON.Array "recenttracks.track" ) 0 }}
+    <div class="flex items-center gap-20">
+      <div style="min-width: fit-content">
+        <img style="border-radius: var(--border-radius); width: 6rem; width: 6rem" src="{{ $track.String "image.1.#text" }}">
+      </div>
+      <div style="overflow: hidden">
+        {{ if $track.Bool "@attr.nowplaying" }}
+        <p class="text-truncate color-positive">Now Playing</p>
+        {{ else }}
+        <p class="text-truncate">{{ $track.String "date.#text" }}</p>
+        {{ end }}
+        <a class="text-truncate block color-highlight" target="_blank" href="{{ $track.String "url" }}">{{ $track.String "name" }}</a>
+        <p class="text-truncate">{{ $track.String "artist.#text" }}</p>
+      </div>
+    </div>

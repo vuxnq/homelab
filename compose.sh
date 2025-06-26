@@ -19,13 +19,13 @@ for service in "${SERVICES[@]}"; do
       docker compose $ENV_ARGS -f "$service/docker-compose.yml" up -d
       ;;
     down)
-      docker compose -f "$service/docker-compose.yml" down
+      docker compose $ENV_ARGS -f "$service/docker-compose.yml" down
       ;;
     pull)
-      docker compose -f "$service/docker-compose.yml" pull
+      docker compose $ENV_ARGS -f "$service/docker-compose.yml" pull
       ;;
     restart)
-      docker compose -f "$service/docker-compose.yml" restart
+      docker compose $ENV_ARGS -f "$service/docker-compose.yml" restart
       ;;
     *)
       echo "unknown action: $ACTION"
