@@ -1,5 +1,9 @@
 branding:
-  custom-footer: <p>sheol</p>
+  custom-footer: |
+    <div>
+      <a class="size-h3" href="https://github.com/vuxnq/sheol/" target="_blank">sheol</a>
+      <a class="visited-indicator" href="https://github.com/glanceapp/glance/" target="_blank" rel="noreferrer">glance</a>
+    </div>
   favicon-url: https://raw.githubusercontent.com/vuxnq/website/refs/heads/main/assets/favicon/favicon.ico
 
 theme:

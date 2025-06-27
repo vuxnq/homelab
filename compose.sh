@@ -26,8 +26,8 @@ for service in "${SERVICES[@]}"; do
       docker compose $ENV_ARGS -f "$service/docker-compose.yml" restart
       ;;
     *)
-      echo "unknown action: $ACTION"
-      echo "usage: $0 [up|down|pull|restart]"
+      echo "> unknown action: $ACTION"
+      echo "  usage: $0 [up|down|pull|restart]"
       exit 1
       ;;
   esac
