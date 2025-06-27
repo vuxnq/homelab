@@ -1,0 +1,30 @@
+name: caddy
+
+services:
+  caddy:
+    container_name: caddy
+    # image: caddy:latest
+    image: ghcr.io/major/caddy:main
+    # image: serfriz/caddy-porkbun-dockerproxy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./config:/etc/caddy
+      - ./config/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+      - .env.secret
+    labels:
+      glance.name: caddy
+      glance.icon: di:caddy
+      glance.description: web server
+
+volumes:
+  caddy_data:
+  caddy_config:

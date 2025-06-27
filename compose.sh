@@ -4,11 +4,9 @@ set -e
 
 ACTION=${1:-up}
 
-SERVICES=("glance" "immich")
+SERVICES=("caddy" "glance" "immich")
 
 for service in "${SERVICES[@]}"; do
-  echo "docker compose $ACTION - $service"
-  
   ENV_ARGS=""
   if [ -f "$service/.env.secret" ]; then
     ENV_ARGS="--env-file $service/.env --env-file $service/.env.secret"
