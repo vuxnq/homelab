@@ -15,8 +15,3 @@ services:
     env_file:
       - .env
       - .env.secret
-    labels:
-      glance.name: glance
-      glance.icon: di:glance
-      glance.url: http://local.vuxnq.com
-      glance.description: dashboard

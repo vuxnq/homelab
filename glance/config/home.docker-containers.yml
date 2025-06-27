@@ -1,0 +1,30 @@
+- type: docker-containers
+  hide-header: true
+  containers:
+    
+    caddy:
+      name: caddy
+      icon: di:caddy
+      description: web server
+
+    glance:
+      name: glance
+      icon: di:glance
+      url: https://sheol.vuxnq.me
+      description: dashboard
+
+    immich_server:
+      name: immich
+      icon: di:immich
+      url: https://immich.sheol.vuxnq.me
+      description: photo & video management
+      id: immich
+    immich_machine_learning:
+      name: machine learning
+      parent: immich
+    immich_postgres:
+      name: database
+      parent: immich
+    immich_redis:
+      name: redis
+      parent: immich

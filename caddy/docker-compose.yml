@@ -20,10 +20,6 @@ services:
     env_file:
       - .env
       - .env.secret
-    labels:
-      glance.name: caddy
-      glance.icon: di:caddy
-      glance.description: web server
 
 volumes:
   caddy_data:

@@ -32,5 +32,4 @@
     - size: full
       widgets:
         $include: home.bookmarks.yml
-        - type: docker-containers
-          hide-header: true
+        $include: home.docker-containers.yml
