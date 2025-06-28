@@ -62,8 +62,8 @@ cd ~/sheol
 
 ```sh
 # backup management
-# place backup folder to ~/backups if available
-# ./backup.sh [backup|restore]
+# move backups to ~/backups if available
+./backup.sh [backup|restore]
 ```
 
 ```sh
