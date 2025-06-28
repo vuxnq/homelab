@@ -3,6 +3,16 @@
 
 ## requirements
 
+### tailscale
+```sh
+# install and start tailscale
+sudo dnf install tailscale
+sudo systemctl enable --now tailscaled
+
+# connect to the network
+sudo tailscale up
+```
+
 ### git(hub)
 ```sh
 # install
@@ -31,16 +41,6 @@ sudo systemctl enable --now docker
 # add yourself to the docker group
 sudo usermod -aG docker $USER
 # relog to take effect
-```
-
-### tailscale
-```sh
-# install and start tailscale
-sudo dnf install tailscale
-sudo systemctl enable --now tailscaled
-
-# connect to the network
-sudo tailscale up
 ```
 
 ## usage

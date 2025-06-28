@@ -26,6 +26,11 @@
           servers:
             - type: local
               name: sheol
+              hide-mountpoints-by-default: true
+              mountpoints:
+                "/":
+                  name: root
+                  hide: false
         $include: home.lastfm.yml
         - type: to-do
           hide-header: true
