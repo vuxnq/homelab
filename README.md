@@ -43,6 +43,17 @@ sudo usermod -aG docker $USER
 # relog to take effect
 ```
 
+### other
+```sh
+# install
+sudo dnf install restic nvim stow
+
+# setting up nvim
+git clone https://github.com/vuxnq/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+stow nvim
+```
+
 ## usage
 ```sh
 git clone https://github.com/vuxnq/sheol.git ~/sheol
