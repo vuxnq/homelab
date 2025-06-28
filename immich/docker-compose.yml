@@ -12,6 +12,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
+      - .env.secret
     ports:
       - '2283:2283'
     depends_on:
@@ -28,6 +29,7 @@ services:
       - model-cache:/cache
     env_file:
       - .env
+      - .env.secret
     restart: always
     healthcheck:
       disable: false

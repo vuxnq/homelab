@@ -61,8 +61,9 @@ cd ~/sheol
 ```
 
 ```sh
-# TODO: add .env.secret to directories
-# TODO: add data/ to directories
+# backup management
+# place backup folder to ~/backups if available
+# ./backup.sh [backup|restore]
 ```
 
 ```sh
