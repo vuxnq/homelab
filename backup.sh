@@ -28,9 +28,6 @@ restic_cmd() {
     restic -r "$RESTIC_REPOSITORY" "$@"
 }
 
-echo "> shutting down docker containers..."
-./compose.sh down
-
 mkdir -p "$BACKUP_DIR"
 if [ ! -d "$RESTIC_REPOSITORY" ]; then
   echo "> initializing restic repository..."
@@ -97,9 +94,6 @@ case "$ACTION" in
     exit 1
     ;;
 esac
-
-echo "> starting docker containers"
-./compose.sh
 
 echo "> $ACTION complete"
 

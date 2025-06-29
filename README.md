@@ -61,12 +61,15 @@ cd ~/sheol
 ```
 
 ```sh
-# backup management
-# move backups to ~/backups if available
-./backup.sh [backup|restore]
-```
-
-```sh
 # docker compose actions
 ./compose.sh [up|down|pull|restart]
 ```
+
+```sh
+# backup management
+# move backups to ~/backups if available
+./compose.sh down
+./backup.sh [backup|restore]
+./compose.sh up
+```
+
