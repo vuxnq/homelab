@@ -12,3 +12,7 @@ sheol.vuxnq.me {
 immich.sheol.vuxnq.me {
   reverse_proxy sheol:2283
 }
+
+navidrome.sheol.vuxnq.me {
+  reverse_proxy sheol:4533
+}

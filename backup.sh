@@ -4,10 +4,10 @@ set -e
 
 ACTION=${1:-backup}
 
-BACKUP_DIR="$HOME/backups"
+BACKUP_DIR="/mnt/backups"
 
 RESTIC_REPOSITORY="$BACKUP_DIR/restic"
-TO_BACKUP=("immich/data")
+TO_BACKUP=("/mnt/music" "immich/data" "navidrome/data")
 
 load_restic_password() {
   if [[ -f .env.secret ]]; then
@@ -39,7 +39,7 @@ case "$ACTION" in
     echo "> backing up restic..."
     restic_cmd backup "${TO_BACKUP[@]}"
     echo "> pruning old restic snapshots..."
-    restic_cmd forget --keep-last 3 --prune
+    restic_cmd forget --keep-last 3 --group-by "" --prune
     echo "> restic check"
     restic_cmd check
 
@@ -82,7 +82,12 @@ case "$ACTION" in
 
     echo "> copying restored files back to original locations..."
     for dir in "${TO_BACKUP[@]}"; do
-      sudo rsync -a "$RESTORE_TEMP/$dir"/ "$dir"/
+      subpath="$dir" # relative path
+      if [[ "$dir" = /* ]]; then
+        subpath="${dir#/}" # absolute path
+      fi
+
+      sudo rsync -a "$RESTORE_TEMP/$subpath/" "$dir/"
     done
 
     echo "> cleaning up temp restore directory..."

@@ -1,0 +1,15 @@
+name: navidrome
+
+services:
+  navidrome:
+    container_name: navidrome
+    image: deluan/navidrome:latest
+    ports:
+      - 4533:4533
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - /mnt/music:/music:ro
+    env_file:
+      - .env
+      - .env.secret

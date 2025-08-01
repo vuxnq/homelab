@@ -4,7 +4,7 @@ set -e
 
 ACTION=${1:-up}
 
-SERVICES=("caddy" "glance" "immich")
+SERVICES=("caddy" "glance" "immich" "navidrome")
 
 docker_compose_cmd() {
   env_args=""
@@ -22,7 +22,7 @@ for service in "${SERVICES[@]}"; do
       docker_compose_cmd up -d
       ;;
     down)
-    docker_compose_cmd down
+      docker_compose_cmd down
       ;;
     pull)
       docker_compose_cmd pull

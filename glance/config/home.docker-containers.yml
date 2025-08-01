@@ -28,3 +28,9 @@
     immich_redis:
       name: redis
       parent: immich
+
+    navidrome:
+      name: navidrome
+      icon: di:navidrome
+      url: https://navidrome.sheol.vuxnq.me
+      description: music streaming service

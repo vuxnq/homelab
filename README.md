@@ -54,6 +54,21 @@ cd ~/.dotfiles
 stow nvim
 ```
 
+### post install
+```sh
+# expand root volume to use all free space
+sudo lvextend --extents +100%FREE /dev/mapper/fedora_sheol-root
+sudo xfs_growfs /dev/mapper/fedora_sheol-root
+
+# disable lid switch
+sudo tee /etc/systemd/logind.conf << EOF > /dev/null
+[Login]
+HandleLidSwitch=ignore
+EOF
+sudo restorecon -F -R /etc/systemd
+sudo systemctl restart systemd-logind.service
+```
+
 ## usage
 ```sh
 git clone https://github.com/vuxnq/sheol.git ~/sheol
@@ -73,17 +88,3 @@ cd ~/sheol
 ./compose.sh up
 ```
 
-### post-install
-```sh
-# expand root volume to use all free space
-sudo lvextend --extents +100%FREE /dev/mapper/fedora_sheol-root
-sudo xfs_growfs /dev/mapper/fedora_sheol-root
-
-# disable lid switch
-sudo tee /etc/systemd/logind.conf << EOF > /dev/null
-[Login]
-HandleLidSwitch=ignore
-EOF
-sudo restorecon -F -R /etc/systemd
-sudo systemctl restart systemd-logind.service
-```
