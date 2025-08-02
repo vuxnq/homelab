@@ -7,6 +7,12 @@
       icon: di:caddy
       description: web server
 
+    copyparty:
+      name: copyparty
+      icon: sh:copyparty
+      url: https://copyparty.sheol.vuxnq.me
+      description: file server
+
     glance:
       name: glance
       icon: di:glance

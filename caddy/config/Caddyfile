@@ -9,6 +9,10 @@ sheol.vuxnq.me {
   reverse_proxy sheol:8080
 }
 
+copyparty.sheol.vuxnq.me {
+  reverse_proxy sheol:3923
+}
+
 immich.sheol.vuxnq.me {
   reverse_proxy sheol:2283
 }
