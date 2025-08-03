@@ -4,7 +4,7 @@ set -e
 
 ACTION=${1:-up}
 
-SERVICES=("caddy" "copyparty" "glance" "immich" "navidrome")
+SERVICES=("caddy" "copyparty" "glance" "immich" "navidrome" "wrtag")
 
 docker_compose_cmd() {
   env_args=""

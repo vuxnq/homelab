@@ -20,3 +20,7 @@ immich.sheol.vuxnq.me {
 navidrome.sheol.vuxnq.me {
   reverse_proxy sheol:4533
 }
+
+wrtag.sheol.vuxnq.me {
+  reverse_proxy sheol:4848
+}

@@ -1,0 +1,15 @@
+name: wrtag
+
+services:
+  wrtag:
+    image: sentriz/wrtag
+    container_name: wrtag
+    env_file:
+      - .env
+      - .env.secret
+    ports:
+      - 4848:80
+    volumes:
+      - ./data:/data
+      - /mnt/music:/music
+      - /mnt/downloads:/downloads

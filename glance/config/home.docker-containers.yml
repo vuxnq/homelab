@@ -40,3 +40,9 @@
       icon: di:navidrome
       url: https://navidrome.sheol.vuxnq.me
       description: music streaming service
+
+    wrtag:
+      name: wrtag
+      icon: sh:wrtag
+      url: https://wrtag.sheol.vuxnq.me
+      description: automated music tagging and organization
