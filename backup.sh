@@ -7,7 +7,7 @@ ACTION=${1:-backup}
 BACKUP_DIR="/mnt/backups"
 
 RESTIC_REPOSITORY="$BACKUP_DIR/restic"
-TO_BACKUP=("/mnt/music" "/mnt/immich" "copyparty/data" "immich/data" "navidrome/data")
+TO_BACKUP=("/mnt/cloud" "/mnt/music" "/mnt/immich" "copyparty/data" "immich/data" "navidrome/data")
 
 load_restic_password() {
   if [[ -f .env.secret ]]; then
