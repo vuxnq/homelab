@@ -8,19 +8,11 @@ services:
     # image: serfriz/caddy-porkbun-dockerproxy:latest
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - 80:80
+      - 443:443
+      - 443:443/udp
     volumes:
       - ./config:/etc/caddy
-      - ./config/site:/srv
-      - caddy_data:/data
-      - caddy_config:/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     env_file:
-      - .env
       - .env.secret
-
-volumes:
-  caddy_data:
-  caddy_config:
