@@ -2,10 +2,9 @@ name: caddy
 
 services:
   caddy:
+    build: ./config
+    image: caddy-porkbun
     container_name: caddy
-    # image: caddy:latest
-    image: ghcr.io/major/caddy:main
-    # image: serfriz/caddy-porkbun-dockerproxy:latest
     restart: unless-stopped
     ports:
       - 80:80
