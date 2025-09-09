@@ -24,6 +24,9 @@ for service in "${SERVICES[@]}"; do
     down)
       docker_compose_cmd down
       ;;
+    build)
+      docker_compose_cmd pull
+      ;;
     pull)
       docker_compose_cmd pull
       ;;

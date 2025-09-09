@@ -77,7 +77,7 @@ cd ~/sheol
 
 ```sh
 # docker compose actions
-./compose.sh [up|down|pull|restart]
+./compose.sh [up|down|build|pull|restart]
 ```
 
 ```sh
