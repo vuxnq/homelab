@@ -2,8 +2,5 @@
   "storageTemplate": {
     "enabled": true,
     "template": "{{y}}/{{MM}}/{{filename}}"
-  },
-  "theme": {
-    "customCss": ":root { --immich-dark-bg: 17 17 27 !important; --immich-dark-gray: 30 30 46 !important; --immich-dark-primary: 180 190 254 !important; --immich-dark-fg: 205 214 244 !important; } .dark { --immich-ui-primary: 180 190 254 !important; --immich-ui-light: 17 17 27 !important; --immich-ui-dark: 205 214 244 !important; --immich-ui-success: 166 227 161 !important; --immich-ui-danger: 243 139 168 !important; --immich-ui-warning: 250 179 135 !important; --immich-ui-info: 137 180 250 !important; --immich-ui-gray: 30 30 46 !important; --immich-ui-default-border: 49 50 68 !important; }"
   }
 }
