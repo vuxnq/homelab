@@ -1,0 +1,13 @@
+name: syncthing
+
+services:
+  syncthing:
+    container_name: syncthing
+    image: syncthing/syncthing
+    restart: unless-stopped
+    volumes:
+      - ./data:/var/syncthing/config
+      - /mnt/sync:/var/syncthing
+    ports:
+      - 8384:8384
+    hostname: sheol

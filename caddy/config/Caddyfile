@@ -21,6 +21,10 @@ navidrome.sheol.vuxnq.me {
   reverse_proxy sheol:4533
 }
 
+syncthing.sheol.vuxnq.me {
+  reverse_proxy sheol:8384
+}
+
 wrtag.sheol.vuxnq.me {
   reverse_proxy sheol:4848
 }

@@ -41,6 +41,12 @@
       url: https://navidrome.sheol.vuxnq.me
       description: music streaming service
 
+    syncthing:
+      name: syncthing
+      icon: sh:syncthing
+      url: https://syncthing.sheol.vuxnq.me
+      description: continuous file synchronization
+
     wrtag:
       name: wrtag
       icon: sh:wrtag
