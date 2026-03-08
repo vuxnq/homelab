@@ -41,6 +41,12 @@
       url: https://navidrome.sheol.vuxnq.me
       description: music streaming service
 
+    pihole:
+      name: pihole
+      icon: sh:pi-hole
+      url: https://pihole.sheol.vuxnq.me
+      description: network-wide ad blocking
+
     syncthing:
       name: syncthing
       icon: sh:syncthing

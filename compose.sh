@@ -4,7 +4,7 @@ set -e
 
 ACTION=${1:-up}
 
-SERVICES=("caddy" "copyparty" "glance" "immich" "navidrome" "syncthing" "wrtag")
+SERVICES=("caddy" "copyparty" "glance" "immich" "navidrome" "pihole" "syncthing" "wrtag")
 
 docker_compose_cmd() {
   env_args=""
@@ -25,7 +25,7 @@ for service in "${SERVICES[@]}"; do
       docker_compose_cmd down
       ;;
     build)
-      docker_compose_cmd pull
+      docker_compose_cmd build --pull
       ;;
     pull)
       docker_compose_cmd pull
@@ -35,7 +35,7 @@ for service in "${SERVICES[@]}"; do
       ;;
     *)
       echo "> unknown action: $ACTION"
-      echo "  usage: $0 [up|down|pull|restart]"
+      echo "  usage: $0 [up|down|build|pull|restart]"
       exit 1
       ;;
   esac
