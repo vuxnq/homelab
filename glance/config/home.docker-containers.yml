@@ -11,18 +11,21 @@
       name: copyparty
       icon: sh:copyparty
       url: https://copyparty.sheol.vuxnq.me
+      same-tab: true
       description: file server
 
     glance:
       name: glance
       icon: di:glance
       url: https://sheol.vuxnq.me
+      same-tab: true
       description: dashboard
 
     immich_server:
       name: immich
       icon: di:immich
       url: https://immich.sheol.vuxnq.me
+      same-tab: true
       description: photo & video management
       id: immich
     immich_machine_learning:
@@ -39,22 +42,26 @@
       name: navidrome
       icon: di:navidrome
       url: https://navidrome.sheol.vuxnq.me
+      same-tab: true
       description: music streaming service
 
     pihole:
       name: pihole
       icon: sh:pi-hole
-      url: https://pihole.sheol.vuxnq.me
+      url: https://pihole.sheol.vuxnq.me/admin
+      same-tab: true
       description: network-wide ad blocking
 
     syncthing:
       name: syncthing
       icon: sh:syncthing
       url: https://syncthing.sheol.vuxnq.me
+      same-tab: true
       description: continuous file synchronization
 
     wrtag:
       name: wrtag
       icon: sh:wrtag
       url: https://wrtag.sheol.vuxnq.me
+      same-tab: true
       description: automated music tagging and organization

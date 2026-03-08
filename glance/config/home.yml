@@ -31,6 +31,11 @@
                 "/":
                   name: root
                   hide: false
+        - type: dns-stats
+          hide-header: true
+          service: pihole-v6
+          url: https://pihole.sheol.vuxnq.me
+          password: ${PIHOLE_PASSWORD}
         $include: home.lastfm.yml
         - type: to-do
           hide-header: true
