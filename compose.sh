@@ -13,7 +13,7 @@ docker_compose_cmd() {
     [[ -f "$env_file" ]] && env_args+=" --env-file $env_file"
   done
 
-  docker compose $env_args -f "$service/docker-compose.yml" "$@"
+  docker compose $env_args -f "$service/compose.yaml" "$@"
 }
 
 for service in "${SERVICES[@]}"; do
