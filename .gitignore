@@ -1,5 +1,5 @@
 # all .env.secret files
-**/.env.secret
+**/.env
 
 # 'data/' folders that are direct children of any folder in the root
 */data/

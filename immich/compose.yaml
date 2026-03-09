@@ -5,14 +5,13 @@ name: immich
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-server:release
     volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - ${IMMICH_CONFIG_FILE}:/usr/src/app/immich.json
+      - /mnt/immich:/usr/src/app/upload
+      - ./immich.json:/usr/src/app/immich.json
       - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
-      - .env.secret
+    environment:
+      TZ: Europe/Prague
     ports:
       - '2283:2283'
     depends_on:
@@ -24,12 +23,9 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    image: ghcr.io/immich-app/immich-machine-learning:release
     volumes:
       - model-cache:/cache
-    env_file:
-      - .env
-      - .env.secret
     restart: always
     healthcheck:
       disable: false
@@ -51,7 +47,7 @@ services:
       POSTGRES_INITDB_ARGS: '--data-checksums'
       # DB_STORAGE_TYPE: 'HDD'
     volumes:
-      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     restart: always
 
 volumes:

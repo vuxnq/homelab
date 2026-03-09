@@ -11,6 +11,6 @@ services:
     ports:
       - 8080:8080
     environment:
-      - LASTFM_USERNAME=vuxnq
-    env_file:
-      - .env.secret
+      LASTFM_USERNAME: vuxnq
+      LASTFM_API_KEY: ${LASTFM_API_KEY}
+      PIHOLE_PASSWORD: ${PIHOLE_PASSWORD}

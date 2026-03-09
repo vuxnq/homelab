@@ -10,14 +10,14 @@ RESTIC_REPOSITORY="$BACKUP_DIR/restic"
 TO_BACKUP=("/mnt/cloud" "/mnt/music" "/mnt/immich" "/mnt/syncthing" "copyparty/data" "immich/data" "navidrome/data" "pihole/data" "syncthing/data")
 
 load_restic_password() {
-  if [[ -f .env.secret ]]; then
-    RESTIC_PASSWORD=$(grep -E "^RESTIC_PASSWORD=" .env.secret | cut -d '=' -f2-)
+  if [[ -f .env ]]; then
+    RESTIC_PASSWORD=$(grep -E "^RESTIC_PASSWORD=" .env | cut -d '=' -f2-)
   fi
 
   if [[ -z "$RESTIC_PASSWORD" ]]; then
-    echo "! RESTIC_PASSWORD not found in .env.secret"
+    echo "! RESTIC_PASSWORD not found in .env"
     read -rsp "enter restic password: " RESTIC_PASSWORD
-    echo "RESTIC_PASSWORD=$RESTIC_PASSWORD" >> .env.secret
+    echo "RESTIC_PASSWORD=$RESTIC_PASSWORD" >> .env
     echo
   fi
 }
@@ -43,24 +43,24 @@ case "$ACTION" in
     echo "> restic check"
     restic_cmd check
 
-    echo "> backing up .env.secret files..."
-    tar -czf "$BACKUP_DIR/env-secrets-$(date +"%Y%m%d-%H%M%S").tar.gz" \
+    echo "> backing up .env files..."
+    tar -czf "$BACKUP_DIR/env-$(date +"%Y%m%d-%H%M%S").tar.gz" \
       --transform 's|^\./||' \
-      $(sudo find . -type f \( -name ".env.secret" -o -path "./.env.secret" \))
+      $(sudo find . -type f \( -name ".env" -o -path "./.env" \))
 
-    env_backups=("$BACKUP_DIR"/env-secrets-*.tar.gz)
+    env_backups=("$BACKUP_DIR"/env-*.tar.gz)
     if (( ${#env_backups[@]} > 3 )); then
-      echo "> pruning old .env.secrets backups..."
+      echo "> pruning old .env backups..."
       to_delete=("${env_backups[@]:0:${#env_backups[@]}-3}")
       rm -- "${to_delete[@]}"
     fi
     ;;
   restore)
-    latest_env_backup=$(ls -1t "$BACKUP_DIR"/env-secrets-*.tar.gz 2>/dev/null | head -n 1)
+    latest_env_backup=$(ls -1t "$BACKUP_DIR"/env-*.tar.gz 2>/dev/null | head -n 1)
     if [ -z "$latest_env_backup" ]; then
-      echo "! no .env.secret backups found"
+      echo "! no .env backups found"
     else
-      echo "> restoring .env.secret files: $latest_env_backup..."
+      echo "> restoring .env files: $latest_env_backup..."
       tar -xzf "$latest_env_backup" -C .
     fi
 

@@ -11,8 +11,8 @@ services:
       - ./data:/data
       - /mnt/music:/music:ro
     environment:
-      - ND_DEFAULTUIVOLUME=25
-      - ND_DEFAULTTHEME="Spotify-ish"
-      - ND_SUBSONIC_ARTISTPARTICIPATIONS=true
-    env_file:
-      - .env.secret
+      ND_DEFAULTUIVOLUME: 25
+      ND_DEFAULTTHEME: "Spotify-ish"
+      ND_SUBSONIC_ARTISTPARTICIPATIONS: true
+      ND_LASTFM_APIKEY: ${ND_LASTFM_APIKEY}
+      ND_LASTFM_SECRET: ${ND_LASTFM_SECRET}
