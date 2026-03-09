@@ -14,6 +14,13 @@
       same-tab: true
       description: file server
 
+    dockhand:
+      name: dockhand
+      icon: sh:dockhand
+      url: https://dockhand.sheol.vuxnq.me
+      same-tab: true
+      description: docker management
+
     glance:
       name: glance
       icon: di:glance

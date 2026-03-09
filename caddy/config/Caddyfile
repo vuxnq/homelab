@@ -13,6 +13,10 @@ copyparty.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:3923
 }
 
+dockhand.sheol.vuxnq.me {
+  reverse_proxy host.docker.internal:3000
+}
+
 immich.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:2283
 }
