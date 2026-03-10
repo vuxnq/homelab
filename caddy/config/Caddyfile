@@ -36,3 +36,7 @@ syncthing.sheol.vuxnq.me {
 wrtag.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:4848
 }
+
+zerobyte.sheol.vuxnq.me {
+  reverse_proxy host.docker.internal:4096
+}

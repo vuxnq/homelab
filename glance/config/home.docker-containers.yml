@@ -72,3 +72,10 @@
       url: https://wrtag.sheol.vuxnq.me
       same-tab: true
       description: automated music tagging and organization
+
+    zerobyte:
+      name: zerobyte
+      icon: sh:zerobyte
+      url: https://zerobyte.sheol.vuxnq.me
+      same-tab: true
+      description: backup automation tool

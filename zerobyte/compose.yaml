@@ -1,0 +1,24 @@
+name: zerobyte
+
+services:
+  zerobyte:
+    image: ghcr.io/nicotsx/zerobyte:latest
+    container_name: zerobyte
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - 4096:4096
+    devices:
+      - /dev/fuse:/dev/fuse
+    environment:
+      TZ: Europe/Prague
+      BASE_URL: https://zerobyte.sheol.vuxnq.me
+      TRUSTED_ORIGINS: http://sheol:4096,http://localhost:4096
+      APP_SECRET: ${APP_SECRET}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data:/var/lib/zerobyte/data
+      - /mnt/backups/zerobyte:/var/lib/zerobyte/repositories
+      - /mnt:/volumes/mnt
+      - /home/vuxnq/sheol:/volumes/sheol
