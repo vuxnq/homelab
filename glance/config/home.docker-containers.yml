@@ -7,30 +7,30 @@
       icon: di:caddy
       description: web server
 
-    copyparty:
-      name: copyparty
-      icon: sh:copyparty
-      url: https://copyparty.sheol.vuxnq.me
-      same-tab: true
-      description: file server
-
     dockhand:
       name: dockhand
-      icon: sh:dockhand
+      icon: sh:docker
       url: https://dockhand.sheol.vuxnq.me
       same-tab: true
       description: docker management
 
+    dufs:
+      name: dufs
+      icon: di:files
+      url: https://dufs.sheol.vuxnq.me
+      same-tab: true
+      description: file server
+
     glance:
       name: glance
-      icon: di:glance
+      icon: sh:glance
       url: https://sheol.vuxnq.me
       same-tab: true
       description: dashboard
 
     immich_server:
       name: immich
-      icon: di:immich
+      icon: sh:immich
       url: https://immich.sheol.vuxnq.me
       same-tab: true
       description: photo & video management
@@ -45,12 +45,26 @@
       name: redis
       parent: immich
 
-    navidrome:
-      name: navidrome
-      icon: di:navidrome
-      url: https://navidrome.sheol.vuxnq.me
+    music_gonic:
+      name: gonic
+      icon: di:gonic
+      url: https://gonic.sheol.vuxnq.me
       same-tab: true
-      description: music streaming service
+      description: music streaming server
+
+    music_slskd:
+      name: slskd
+      icon: sh:slskd
+      url: https://slskd.sheol.vuxnq.me
+      same-tab: true
+      description: p2p music sharing
+
+    music_wrtag:
+      name: wrtag
+      icon: sh:wrtag
+      url: https://wrtag.sheol.vuxnq.me
+      same-tab: true
+      description: automated music tagging and organization
 
     pihole:
       name: pihole
@@ -65,13 +79,6 @@
       url: https://syncthing.sheol.vuxnq.me
       same-tab: true
       description: continuous file synchronization
-
-    wrtag:
-      name: wrtag
-      icon: sh:wrtag
-      url: https://wrtag.sheol.vuxnq.me
-      same-tab: true
-      description: automated music tagging and organization
 
     zerobyte:
       name: zerobyte

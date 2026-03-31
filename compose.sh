@@ -6,14 +6,13 @@ ACTION=${1:-up}
 
 SERVICES=(
   "caddy"
-  "copyparty"
   "dockhand"
+  "dufs"
   "glance"
   "immich"
-  "navidrome"
+  "music"
   "pihole"
   "syncthing"
-  "wrtag"
 )
 
 docker_compose_cmd() {

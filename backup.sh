@@ -13,12 +13,12 @@ TO_BACKUP=(
   "/mnt/music"
   "/mnt/sync"
 
-  "copyparty/data"
   "dockhand/data"
   "immich/data"
-  "navidrome/data"
+  "music/data"
   "pihole/data"
   "syncthing/data"
+  "zerobyte/data"
 )
 
 load_restic_password() {
