@@ -26,8 +26,12 @@ services:
       WRTAG_WEB_LISTEN_ADDR: ':7373'
       WRTAG_WEB_DB_PATH: /data/wrtag.db
       WRTAG_PATH_FORMAT: '/music/{{ artists .Release.Artists | join "; " | safepath }}/{{ .Release.Title | safepath }}/{{ pad0 2 .TrackNum }} {{ .Track.Title | safepath }}{{ .Ext }}'
-      WRTAG_ADDON: 'lyrics lrclib genius musixmatch'
+      WRTAG_ADDON: 'replaygain,musicdesc,lyrics lrclib genius musixmatch,subproc metadata image-write <cover> -- <files>'
+      WRTAG_RESEARCH_LINK: 'musicbrainz https://musicbrainz.org/taglookup?tag-lookup.artist={{ .Artist | urlquery }}&tag-lookup.release={{ .Album | urlquery }},spotify https://open.spotify.com/search/{{ printf "%s %s" .Artist .Album | urlquery }},tidal https://tidal.com/search?q={{ printf "%s %s" .Artist .Album | urlquery }},bandcamp https://bandcamp.com/search?q={{ printf "%s %s" .Artist .Album | urlquery }},apple-music https://music.apple.com/search?term={{ printf "%s %s" .Artist .Album | urlquery }},soundcloud https://soundcloud.com/search?q={{ printf "%s %s" .Artist .Album | urlquery }},lastfm https://www.last.fm/search?q={{ printf "%s %s" .Artist .Album | urlquery }},harmony https://harmony.pulsewidth.org.uk/release?url=&gtin={{ .Barcode | urlquery }}&region=&deezer=&itunes=&spotify=&tidal=&beatport=,google https://www.google.com/search?q={{ printf "%s %s" .Artist .Album | urlquery }}'
+      WRTAG_NOTIFICATION_URI: 'complete generic+http://music_gonic/rest/startScan.view?u=${GONIC_USER}&p=${GONIC_PASSWORD}&c=wrtag'
       WRTAG_WEB_API_KEY: ${WRTAG_WEB_API_KEY}
+      GONIC_USER: ${GONIC_USER}
+      GONIC_PASSWORD: ${GONIC_PASSWORD}
     ports:
       - 4848:7373
     volumes:
