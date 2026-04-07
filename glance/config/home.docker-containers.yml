@@ -45,12 +45,19 @@
       name: redis
       parent: immich
 
-    music_gonic:
-      name: gonic
-      icon: di:gonic
-      url: https://gonic.sheol.vuxnq.me
+    music_navidrome:
+      name: navidrome
+      icon: sh:navidrome
+      url: https://navidrome.sheol.vuxnq.me
       same-tab: true
       description: music streaming server
+      id: music
+    music_explo:
+      name: explo
+      parent: music
+    music_explo_ofelia:
+      name: explo ofelia
+      parent: music
 
     music_slskd:
       name: slskd

@@ -17,10 +17,6 @@ dufs.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:5000
 }
 
-gonic.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:4747
-}
-
 immich.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:2283
 }
@@ -31,6 +27,10 @@ navidrome.sheol.vuxnq.me {
 
 pihole.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:8053
+}
+
+cups.sheol.vuxnq.me {
+  reverse_proxy host.docker.internal:631
 }
 
 slskd.sheol.vuxnq.me {

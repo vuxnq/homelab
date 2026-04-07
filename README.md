@@ -43,6 +43,25 @@ sudo usermod -aG docker $USER
 # relog to take effect
 ```
 
+### cups
+```sh
+# cups, gutenprint
+sudo dnf install cups gutenprint gutenprint-cups
+sudo systemctl enable --now cups
+sudo cupsctl --share-printers --remote-any --remote-admin
+sudo systemctl restart cups
+
+# firewall
+sudo firewall-cmd --add-service=ipp --add-service=mdns --permanent
+sudo firewall-cmd --reload
+
+# edit config
+sudo nvim /etc/cups/cupsd.conf
+# add these 2 lines
+# ServerAlias *
+# DefaultEncryption Never
+```
+
 ### misc
 ```sh
 # install
