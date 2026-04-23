@@ -80,6 +80,13 @@
       same-tab: true
       description: network-wide ad blocking
 
+    silverbullet:
+      name: silverbullet
+      icon: sh:silverbullet
+      url: https://silverbullet.sheol.vuxnq.me
+      same-tab: true
+      description: note-taking app
+
     syncthing:
       name: syncthing
       icon: sh:syncthing

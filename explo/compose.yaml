@@ -16,6 +16,13 @@ services:
       WEEKLY_JAMS_FLAGS: '--playlist=weekly-jams --download-mode=normal'
       DAILY_JAMS_SCHEDULE: '15 0 * * *'
       DAILY_JAMS_FLAGS: '--playlist=daily-jams --download-mode=normal'
+      LISTENBRAINZ_USER: ${LISTENBRAINZ_USER} # these must be in .env because godotenv bruh
+      EXPLO_SYSTEM: ${EXPLO_SYSTEM}
+      SYSTEM_URL: ${SYSTEM_URL}
+      SYSTEM_USERNAME: ${SYSTEM_USERNAME}
+      SYSTEM_PASSWORD: ${SYSTEM_PASSWORD}
+      ADMIN_SYSTEM_USERNAME: ${ADMIN_SYSTEM_USERNAME}
+      ADMIN_SYSTEM_PASSWORD: ${ADMIN_SYSTEM_PASSWORD}
     labels: # TODO: using ofelia until theres native solution
       ofelia.enabled: "true"
       ofelia.job-exec.explo-chown.schedule: "45 2 * * *"

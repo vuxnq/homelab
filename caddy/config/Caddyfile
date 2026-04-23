@@ -37,6 +37,10 @@ slskd.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:5030
 }
 
+silverbullet.sheol.vuxnq.me {
+  reverse_proxy host.docker.internal:3001
+}
+
 syncthing.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:8384
 }

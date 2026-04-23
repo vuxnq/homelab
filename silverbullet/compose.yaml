@@ -1,0 +1,13 @@
+name: silverbullet
+
+services:
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:latest
+    restart: unless-stopped
+    user: 1000:1000
+    environment:
+      SB_USER: ${SB_USER_USER}:${SB_USER_PASSWORD}
+    volumes:
+      - /mnt/notes:/space
+    ports:
+      - 3001:3000
