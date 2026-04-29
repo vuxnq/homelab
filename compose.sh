@@ -12,6 +12,7 @@ SERVICES=(
   "immich"
   "music"
   "pihole"
+  "upsnap"
   "silverbullet"
   "syncthing"
 )

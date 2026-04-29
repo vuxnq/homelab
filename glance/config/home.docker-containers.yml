@@ -9,7 +9,7 @@
 
     dockhand:
       name: dockhand
-      icon: sh:docker
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/dockhand.webp
       url: https://dockhand.sheol.vuxnq.me
       same-tab: true
       description: docker management
@@ -82,7 +82,7 @@
 
     silverbullet:
       name: silverbullet
-      icon: sh:silverbullet
+      icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/silverbullet.webp
       url: https://silverbullet.sheol.vuxnq.me
       same-tab: true
       description: note-taking app
@@ -93,6 +93,13 @@
       url: https://syncthing.sheol.vuxnq.me
       same-tab: true
       description: continuous file synchronization
+
+    upsnap:
+      name: upsnap
+      icon: sh:upsnap
+      url: https://upsnap.sheol.vuxnq.me
+      same-tab: true
+      description: wake on lan web app
 
     zerobyte:
       name: zerobyte

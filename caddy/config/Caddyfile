@@ -45,6 +45,10 @@ syncthing.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:8384
 }
 
+upsnap.sheol.vuxnq.me {
+  reverse_proxy host.docker.internal:8090
+}
+
 wrtag.sheol.vuxnq.me {
   reverse_proxy host.docker.internal:4848
 }

@@ -1,0 +1,16 @@
+name: upsnap
+
+services:
+  upsnap:
+    cap_add:
+      - NET_RAW
+    cap_drop:
+      - ALL
+    container_name: upsnap
+    image: ghcr.io/seriousm4x/upsnap:5
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/pb_data
+      - /etc/passwd:/etc/passwd:ro
+    user: 1000:1000
