@@ -14,3 +14,6 @@ services:
       - ./data:/app/pb_data
       - /etc/passwd:/etc/passwd:ro
     user: 1000:1000
+    environment: # sshpass -e ssh -o "StrictHostKeyChecking=no" $SSHUSER@<ip-address> "echo $SSHPASS | sudo -S poweroff"
+        SSHUSER: ${SSHUSER}
+        SSHPASS: ${SSHPASS}

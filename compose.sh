@@ -10,7 +10,6 @@ SERVICES=(
   "dufs"
   "glance"
   "immich"
-  "music"
   "pihole"
   "upsnap"
   "silverbullet"
