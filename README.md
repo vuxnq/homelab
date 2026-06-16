@@ -9,6 +9,9 @@
 sudo dnf install tailscale
 sudo systemctl enable --now tailscaled
 
+# advertise as exit-node
+sudo tailscale set --advertise-exit-node
+
 # connect to the network
 sudo tailscale up
 ```
