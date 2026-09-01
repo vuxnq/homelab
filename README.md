@@ -78,6 +78,13 @@ stow nvim
 
 ### post install
 ```sh
+# create and activate swapfile
+sudo dd if=/dev/zero of=/swapfile bs=1M count=6144 status=progress
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap defaults 0 0' | sudo tee -a /etc/fstab
+
 # expand root volume to use all free space
 sudo lvextend --extents +100%FREE /dev/mapper/fedora_sheol-root
 sudo xfs_growfs /dev/mapper/fedora_sheol-root
