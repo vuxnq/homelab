@@ -38,6 +38,17 @@ sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/do
 # install docker
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# cap docker container log sizes
+sudo tee /etc/docker/daemon.json << 'EOF'
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "20m",
+    "max-file": "3"
+  }
+}
+EOF
+
 # start docker
 sudo systemctl enable --now docker
 
@@ -89,6 +100,25 @@ echo '/swapfile none swap defaults 0 0' | sudo tee -a /etc/fstab
 sudo lvextend --extents +100%FREE /dev/mapper/fedora_sheol-root
 sudo xfs_growfs /dev/mapper/fedora_sheol-root
 
+# kernel panic auto reboot
+echo "kernel.panic = 10" | sudo tee /etc/sysctl.d/99-panic-reboot.conf
+sudo sysctl --system
+
+# automatic security patches
+sudo dnf install -y dnf5-plugin-automatic
+sudo cp /usr/share/dnf5/dnf5-plugins/automatic.conf /etc/dnf/automatic.conf
+sudo sed -i 's/upgrade_type = default/upgrade_type = security/' /etc/dnf/automatic.conf
+sudo sed -i 's/apply_updates = no/apply_updates = yes/' /etc/dnf/automatic.conf
+sudo systemctl enable --now dnf5-automatic.timer
+
+# cap journald log sizes
+sudo mkdir -p /etc/systemd/journald.conf.d/
+sudo tee /etc/systemd/journald.conf.d/size-limit.conf << 'EOF'
+[Journal]
+SystemMaxUse=500M
+EOF
+sudo systemctl restart systemd-journald
+
 # disable lid switch
 sudo tee /etc/systemd/logind.conf << EOF > /dev/null
 [Login]
@@ -98,9 +128,9 @@ sudo restorecon -F -R /etc/systemd
 sudo systemctl restart systemd-logind.service
 
 # disable systemd-resolved port 53 - https://docs.pi-hole.net/docker/tips-and-tricks/
-# sudo sh -c 'mkdir -p /etc/systemd/resolved.conf.d && printf "[Resolve]\nDNSStubListener=no\n" | tee /etc/systemd/resolved.conf.d/no-stub.conf'
-# sudo sh -c 'rm -f /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf'
-# systemctl restart systemd-resolved
+sudo sh -c 'mkdir -p /etc/systemd/resolved.conf.d && printf "[Resolve]\nDNSStubListener=no\n" | tee /etc/systemd/resolved.conf.d/no-stub.conf'
+sudo sh -c 'rm -f /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf'
+systemctl restart systemd-resolved
 ```
 
 ## usage
