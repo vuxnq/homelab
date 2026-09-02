@@ -82,9 +82,7 @@ sudo nvim /etc/cups/cupsd.conf
 sudo dnf install restic nvim stow
 
 # setting up nvim
-git clone https://github.com/vuxnq/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-stow nvim
+git clone https://github.com/vuxnq/nvim.git ~/.config/nvim
 ```
 
 ### post install
@@ -110,6 +108,13 @@ sudo cp /usr/share/dnf5/dnf5-plugins/automatic.conf /etc/dnf/automatic.conf
 sudo sed -i 's/upgrade_type = default/upgrade_type = security/' /etc/dnf/automatic.conf
 sudo sed -i 's/apply_updates = no/apply_updates = yes/' /etc/dnf/automatic.conf
 sudo systemctl enable --now dnf5-automatic.timer
+
+# disable wifi power save
+sudo tee /etc/NetworkManager/conf.d/default-wifi-powersave-off.conf <<EOF
+[connection]
+wifi.powersave = 2
+EOF
+sudo systemctl restart NetworkManager
 
 # cap journald log sizes
 sudo mkdir -p /etc/systemd/journald.conf.d/
@@ -141,14 +146,13 @@ cd ~/sheol
 
 ```sh
 # docker compose actions
-./compose.sh [up|down|build|pull|restart]
+./compose.sh [up|down|update|build|pull|restart]
 ```
 
 ```sh
-# backup management
-# move backups to ~/backups if available
-./compose.sh down
-./backup.sh [backup|restore]
-./compose.sh up
+# backup restoration
+# all docker containers must be down
+# move backups to ~/backups
+./restore.sh
 ```
 
