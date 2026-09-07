@@ -12,7 +12,6 @@ SERVICES=(
   "immich"
   "pihole"
   "upsnap"
-  "silverbullet"
   "syncthing"
 )
 

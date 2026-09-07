@@ -1,5 +1,13 @@
-# all .env.secret files
-**/.env
+# opentofu state, plugins, secrets
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.auto.tfvars
 
-# 'data/' folders that are direct children of any folder in the root
-*/data/
+# ansible secrets
+ansible-secrets.yml
+
+# apps secrets, data
+**/.env
+apps/*/data/
