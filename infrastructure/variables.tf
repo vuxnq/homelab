@@ -1,6 +1,6 @@
-variable "proxmox_endpoint" {
+variable "proxmox_ip" {
   type = string
-  default = "https://192.168.122.150:8006/"
+  default = "192.168.0.2"
 }
 
 variable "proxmox_api_token" {
@@ -26,17 +26,22 @@ variable "public_ssh_key" {
   default = "~/.ssh/keys/homelab.key.pub"
 }
 
+variable "network_cidr" {
+  type = string
+  default = "10.0.0.0/24"
+}
+
 variable "network_gateway" {
   type = string
-  default = "192.168.122.1"
+  default = "10.0.0.1"
 }
 
 variable "network_ts_ip" {
   type = string
-  default = "192.168.122.201/24"
+  default = "10.0.0.2/24"
 }
 
 variable "network_docker_ip" {
   type = string
-  default = "192.168.122.200/24"
+  default = "10.0.0.3/24"
 }
