@@ -31,6 +31,11 @@ variable "network_gateway" {
   default = "192.168.122.1"
 }
 
+variable "network_ts_ip" {
+  type = string
+  default = "192.168.122.201/24"
+}
+
 variable "network_docker_ip" {
   type = string
   default = "192.168.122.200/24"

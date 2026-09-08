@@ -1,0 +1,6 @@
+---
+
+- name: configure subnet router
+  hosts: tailscale_router
+  roles:
+    - tailscale

@@ -1,0 +1,8 @@
+ansible_ssh_private_key_file: "~/.ssh/keys/homelab.key"
+
+# tailscale
+tailscale_advertise_routes: "192.168.122.0/24"
+tailscale_exit_node: true
+
+# secrets - create ansible-secrets.yml
+tailscale_authkey: ""

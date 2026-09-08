@@ -1,0 +1,7 @@
+all:
+  children:
+    tailscale_router:
+      hosts:
+        ts-router:
+          ansible_host: 192.168.122.201
+          ansible_user: root
