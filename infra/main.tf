@@ -47,7 +47,7 @@ resource "proxmox_sdn_applier" "subnet_applier" {
   depends_on = [
     proxmox_sdn_zone_simple.internal,
     proxmox_sdn_vnet.vnet_internal,
-    proxmox_sdn_subnet.subnet_internal,
+    proxmox_sdn_subnet.subnet_internal
   ]
 }
 
@@ -68,6 +68,7 @@ resource "proxmox_virtual_environment_container" "tailscale_router" {
   unprivileged = true
 
   features { nesting = true }
+
   initialization {
     hostname = "ts-router"
 
@@ -97,7 +98,10 @@ resource "proxmox_virtual_environment_container" "tailscale_router" {
     type = "debian"
   }
 
-  depends_on = [proxmox_sdn_applier.subnet_applier]
+  depends_on = [
+    proxmox_sdn_applier.subnet_applier,
+    terraform_data.proxmox_authorized_key
+  ]
 }
 
 # debian virtual machine

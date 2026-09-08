@@ -1,5 +1,10 @@
 ---
 
+- name: apply common config
+  hosts: all
+  roles:
+    - common
+
 - name: configure subnet router
   hosts: tailscale_router
   roles:
