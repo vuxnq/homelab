@@ -12,5 +12,10 @@ ansible_ssh_common_args: "-o ProxyCommand='ssh -i {{ ansible_ssh_private_key_fil
 tailscale_advertise_routes: "10.0.0.0/24"
 tailscale_exit_node: true
 
+# pihole
+pihole_upstream_dns:
+  - "1.1.1.1"
+  - "1.0.0.1"
+
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""

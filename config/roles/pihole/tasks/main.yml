@@ -1,0 +1,43 @@
+---
+
+- name: create pihole group
+  ansible.builtin.group:
+    name: pihole
+    system: true
+    state: present
+
+- name: create pihole user
+  ansible.builtin.user:
+    name: pihole
+    group: pihole
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+    state: present
+
+- name: ensure pihole config dir exists
+  ansible.builtin.file:
+    path: /etc/pihole
+    state: directory
+    owner: pihole
+    group: pihole
+    mode: "0755"
+
+- name: pre-seed pihole config
+  ansible.builtin.template:
+    src: pihole.toml.j2
+    dest: /etc/pihole/pihole.toml
+    owner: pihole
+    group: pihole
+    mode: "0644"
+
+- name: run pihole unattended installer
+  ansible.builtin.shell:
+    cmd: curl -L https://install.pi-hole.net | bash /dev/stdin --unattended
+    creates: /etc/systemd/system/pihole-FTL.service
+
+- name: ensure pihole-FTL is enabled and running
+  ansible.builtin.systemd:
+    name: pihole-FTL
+    enabled: true
+    state: started

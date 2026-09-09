@@ -34,7 +34,12 @@ variable "net_ts_ip" {
   default = "10.0.0.2/24"
 }
 
-variable "net_apps_ip" {
+variable "net_pihole_ip" {
   type    = string
   default = "10.0.0.3/24"
+}
+
+variable "net_apps_ip" {
+  type    = string
+  default = "10.0.0.4/24"
 }

@@ -1,0 +1,3 @@
+[dns]
+upstreams = [{% for ip in pihole_upstream_dns %}"{{ ip }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+listeningMode = "ALL"

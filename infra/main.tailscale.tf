@@ -34,7 +34,7 @@ resource "proxmox_virtual_environment_container" "ts_router" {
 
   disk {
     datastore_id = "local-lvm"
-    size         = 4 # default 4
+    size         = 2 # default 4
   }
 
   operating_system {

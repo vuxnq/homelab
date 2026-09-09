@@ -9,3 +9,8 @@
   hosts: ts_router
   roles:
     - tailscale
+
+- name: configure pihole
+  hosts: pihole
+  roles:
+    - pihole
