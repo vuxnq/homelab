@@ -4,8 +4,8 @@ variable "pve_ip" {
 }
 
 variable "pve_user" {
-  type      = string
-  default   = "root"
+  type    = string
+  default = "root"
 }
 
 variable "pve_password" {
