@@ -1,6 +1,6 @@
 all:
   children:
-    tailscale_router:
+    network:
       hosts:
-        ts-router:
+        ts_router:
           ansible_host: 10.0.0.2

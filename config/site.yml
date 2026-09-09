@@ -6,6 +6,6 @@
     - common
 
 - name: configure subnet router
-  hosts: tailscale_router
+  hosts: ts_router
   roles:
     - tailscale
