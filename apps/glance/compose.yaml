@@ -13,4 +13,4 @@ services:
     environment:
       LASTFM_USERNAME: vuxnq
       LASTFM_API_KEY: ${LASTFM_API_KEY}
-      PIHOLE_PASSWORD: ${PIHOLE_PASSWORD}
+      PIHOLE_PASSWORD: ${PIHOLE_PASSWORD} # TODO

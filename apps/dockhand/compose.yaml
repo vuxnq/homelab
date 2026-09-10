@@ -12,5 +12,5 @@ services:
       - 3000:3000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/vuxnq/sheol:/app/data/stacks/sheol
-      - ./data:/app/data
+      - /opt/apps:/app/data/stacks/apps:ro
+      - /mnt/data/dockhand/data:/app/data

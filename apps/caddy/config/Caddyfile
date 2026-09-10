@@ -26,7 +26,7 @@ navidrome.sheol.vuxnq.me {
 }
 
 pihole.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:8053
+  reverse_proxy 10.0.0.3:80
 }
 
 cups.sheol.vuxnq.me {

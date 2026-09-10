@@ -7,7 +7,7 @@ services:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:release
     volumes:
-      - /mnt/immich:/data
+      - /mnt/data/immich/data:/data
       - ./immich.json:/data/immich.json
       - /etc/localtime:/etc/localtime:ro
     environment:
@@ -30,9 +30,9 @@ services:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:release
     volumes:
-      - ./data/ml/cache:/cache
-      - ./data/ml/dotcache:/.cache
-      - ./data/ml/config:/.config
+      - /mnt/data/immich/ml/cache:/cache
+      - /mnt/data/immich/ml/dotcache:/.cache
+      - /mnt/data/immich/ml/config:/.config
     restart: always
     healthcheck:
       disable: false
@@ -56,7 +56,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_DATABASE_NAME}
       POSTGRES_INITDB_ARGS: '--data-checksums'
-      # DB_STORAGE_TYPE: 'HDD'
+      DB_STORAGE_TYPE: 'HDD'
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - /mnt/data/immich/postgres:/var/lib/postgresql/data
     restart: always
