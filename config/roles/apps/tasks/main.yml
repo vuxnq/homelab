@@ -1,0 +1,27 @@
+---
+
+- name: sync apps directory to host
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/../apps/"
+    dest: "{{ apps_dir }}/"
+    delete: true
+    rsync_opts:
+      - "--exclude=.git"
+
+# dict2items turns app_secrets into a list of {key: "caddy", value: {PORKBUN_API_KEY: ..., ...}} pairs
+- name: write .env files for apps that need secrets
+  ansible.builtin.copy:
+    dest: "{{ apps_dir }}/{{ item.key }}/.env"
+    content: |
+      {% for k, v in item.value.items() %}
+      {{ k }}={{ v }}
+      {% endfor %}
+    mode: "0600"
+  loop: "{{ app_secrets | dict2items }}"
+  no_log: true
+
+- name: deploy each compose project
+  community.docker.docker_compose_v2:
+    project_src: "{{ apps_dir }}/{{ item }}"
+    state: present
+  loop: "{{ apps_services }}"

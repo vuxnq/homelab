@@ -21,5 +21,31 @@ adlist_urls:
   - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
   - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
 
+# apps
+apps_dir: /opt/apps
+apps_services:
+  - caddy
+  - dockhand
+  - dufs
+  - glance
+  - immich
+  - upsnap
+  - syncthing
+
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
+
+app_secrets:
+  caddy:
+    PORKBUN_API_KEY: ""
+    PORKBUN_API_SECRET_KEY: ""
+  glance:
+    LASTFM_API_KEY: ""
+    PIHOLE_PASSWORD: ""
+  immich:
+    DB_USERNAME: ""
+    DB_PASSWORD: ""
+    DB_DATABASE_NAME: ""
+  upsnap:
+    SSHUSER: ""
+    SSHPASS: ""

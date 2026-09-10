@@ -6,3 +6,7 @@ all:
           ansible_host: 10.0.0.2
         pihole:
           ansible_host: 10.0.0.3
+    vms:
+      hosts:
+        apps_host:
+          ansible_host: 10.0.0.4

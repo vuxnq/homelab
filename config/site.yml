@@ -14,3 +14,10 @@
   hosts: pihole
   roles:
     - pihole
+
+- name: configure apps host
+  hosts: apps_host
+  roles:
+    - apps_host
+    - docker
+    - apps
