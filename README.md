@@ -2,6 +2,8 @@
 [proxmox server](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso)
 
 ## requirements
+- 2 disks
+
 ### tools
 ```sh
 # install opentofu, ansible
@@ -9,6 +11,14 @@ sudo dnf install opentofu ansible
 ```
 
 ## prerequisites
+### configure proxmox
+- select pve node
+- go to disks. find hdd and wipe
+- disks -> lvm-thin
+- create: thinpool
+    - disk: select hdd
+    - name: `hdd-storage`
+
 ### generate ssh key
 ```sh
 mkdir -p ~/.ssh/keys

@@ -25,6 +25,8 @@ resource "proxmox_virtual_environment_container" "ts_router" {
     user_account { keys = [local.homelab_ssh_key] }
   }
 
+  memory { dedicated = 512 }
+
   device_passthrough { path = "/dev/net/tun" }
 
   network_interface {
@@ -33,8 +35,8 @@ resource "proxmox_virtual_environment_container" "ts_router" {
   }
 
   disk {
-    datastore_id = "local-lvm"
-    size         = 2 # default 4
+    datastore_id = var.disk_name
+    size         = 2
   }
 
   operating_system {

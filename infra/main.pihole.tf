@@ -25,14 +25,16 @@ resource "proxmox_virtual_environment_container" "pihole" {
     user_account { keys = [local.homelab_ssh_key] }
   }
 
+  memory { dedicated = 512 }
+
   network_interface {
     name   = "eth0"
     bridge = proxmox_sdn_vnet.vnet_internal.id
   }
 
   disk {
-    datastore_id = "local-lvm"
-    size         = 2 # default 4
+    datastore_id = var.disk_name
+    size         = 4
   }
 
   operating_system {

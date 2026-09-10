@@ -8,21 +8,40 @@ resource "proxmox_download_file" "debian_cloud_image" {
 
 resource "proxmox_virtual_environment_vm" "apps_host" {
   name        = "apps-host"
-  description = "this used to be sheol" # TODO
+  description = "this used to be sheol"
   node_name   = local.root_node
 
-  cpu { cores = 2 }
-  memory { dedicated = 2048 }
+  agent {
+    enabled = true
+
+    wait_for_ip {
+      disabled = true # without it, it halted on creating
+    }
+  }
+
+  cpu { cores = var.cpu_apps_cores }
+
+  memory {
+    dedicated = var.mem_apps_max
+    floating  = var.mem_apps_min
+  }
 
   network_device {
     bridge = proxmox_sdn_vnet.vnet_internal.id
   }
 
   disk {
-    datastore_id = "local-lvm"
+    datastore_id = var.disk_name
     file_id      = proxmox_download_file.debian_cloud_image.id
     interface    = "virtio0"
-    size         = 8 # default 8
+    size         = var.disk_apps_size
+  }
+
+  disk {
+    datastore_id = var.disk_data_name
+    interface    = "virtio1"
+    file_format  = "raw"
+    size         = var.disk_data_apps_size
   }
 
   initialization {
@@ -32,10 +51,7 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
         gateway = var.net_gateway
       }
     }
-    user_account {
-      username = "test"
-      keys     = [local.homelab_ssh_key]
-    }
+    user_account { keys = [local.homelab_ssh_key] }
   }
 
   depends_on = [proxmox_sdn_applier.subnet_applier]
