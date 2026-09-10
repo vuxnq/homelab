@@ -41,3 +41,27 @@
     name: pihole-FTL
     enabled: true
     state: started
+
+- name: get current adlist URLs from gravity.db
+  ansible.builtin.command: sqlite3 /etc/pihole/gravity.db "SELECT address FROM adlist;"
+  register: current_adlist
+  changed_when: false
+
+- name: determine adlist changes
+  ansible.builtin.set_fact:
+    adlist_to_add: "{{ adlist_urls | difference(current_adlist.stdout_lines) }}"
+    adlist_to_remove: "{{ current_adlist.stdout_lines | difference(adlist_urls) }}"
+
+- name: add new adlist URLs
+  ansible.builtin.command: >
+    sqlite3 /etc/pihole/gravity.db
+    "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
+  loop: "{{ adlist_to_add }}"
+  notify: update gravity
+
+- name: remove stale adlist URLs
+  ansible.builtin.command: >
+    sqlite3 /etc/pihole/gravity.db
+    "DELETE FROM adlist WHERE address='{{ item }}';"
+  loop: "{{ adlist_to_remove }}"
+  notify: update gravity

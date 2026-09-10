@@ -17,5 +17,9 @@ pihole_upstream_dns:
   - "1.1.1.1"
   - "1.0.0.1"
 
+adlist_urls:
+  - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
+  - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
+
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""

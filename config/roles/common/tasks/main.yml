@@ -12,4 +12,5 @@
       - curl
       - ca-certificates
       - gnupg
+      - sqlite3
     state: present
