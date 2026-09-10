@@ -39,6 +39,9 @@ app_secrets:
   caddy:
     PORKBUN_API_KEY: ""
     PORKBUN_API_SECRET_KEY: ""
+  dufs:
+    DUFS_USER: ""
+    DUFS_PASSWORD: ""
   glance:
     LASTFM_API_KEY: ""
     PIHOLE_PASSWORD: ""
