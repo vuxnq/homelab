@@ -2,12 +2,12 @@
 [proxmox server](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso)
 
 ## requirements
-- 2 disks
+- porkbun domain, tailscale, 2+ disks
 
 ### tools
 ```sh
 # install opentofu, ansible
-sudo dnf install opentofu ansible
+sudo dnf install opentofu ansible rsync
 ```
 
 ## prerequisites
@@ -74,3 +74,9 @@ ansible-playbook site.yml --check --diff
 ansible-playbook site.yml
 cd ..
 ```
+
+### post deployment
+- go to tailscale and approve subnet routes and exit node request
+- go to porkbun and set dns:
+    - A record: sheol.vuxnq.me -> 10.0.0.4 (apps_host)
+    - CNAME record: *.sheol.vuxnq.me -> sheol.vuxnq.me

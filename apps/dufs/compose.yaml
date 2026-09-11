@@ -10,5 +10,5 @@ services:
     volumes:
       - /mnt/data/shared:/data/shared
       - /mnt/data/syncthing/sync:/data/syncthing
-    command: /data --auth ${DUFS_USER}:${DUFS_PASSWORD}
+    command: /data -A -a ${DUFS_USER}:${DUFS_PASSWORD}@/syncthing:rw -a @/shared:rw
     restart: unless-stopped

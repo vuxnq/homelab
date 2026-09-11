@@ -39,6 +39,14 @@ apps_services:
   - upsnap
   - syncthing
 
+apps_data_dirs:
+  - path: /mnt/data/shared
+    owner: 1000
+    group: 1000
+  - path: /mnt/data/syncthing/sync
+    owner: 1000
+    group: 1000
+
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
 

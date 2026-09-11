@@ -21,6 +21,15 @@
   loop: "{{ app_secrets | dict2items }}"
   no_log: true
 
+- name: ensure app data directories exist with correct ownership
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode | default('0755') }}"
+  loop: "{{ apps_data_dirs }}"
+
 - name: deploy each compose project
   community.docker.docker_compose_v2:
     project_src: "{{ apps_dir }}/{{ item }}"

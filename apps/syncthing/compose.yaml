@@ -5,6 +5,9 @@ services:
     container_name: syncthing
     image: syncthing/syncthing
     restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
     volumes:
       - /mnt/data/syncthing/data:/var/syncthing/config
       - /mnt/data/syncthing/sync:/var/syncthing
