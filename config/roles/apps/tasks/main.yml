@@ -5,6 +5,7 @@
     src: "{{ playbook_dir }}/../apps/"
     dest: "{{ apps_dir }}/"
     delete: true
+    use_ssh_args: true
     rsync_opts:
       - "--exclude=.git"
 

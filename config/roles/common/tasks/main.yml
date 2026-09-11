@@ -8,9 +8,5 @@
 
 - name: ensure baseline packages are present
   ansible.builtin.apt:
-    name:
-      - curl
-      - ca-certificates
-      - gnupg
-      - sqlite3
+    name: "{{ baseline_packages }}"
     state: present

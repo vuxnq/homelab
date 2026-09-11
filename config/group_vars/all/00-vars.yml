@@ -8,6 +8,13 @@ proxmox_ip: "192.168.0.2"
 
 ansible_ssh_common_args: "-o ProxyCommand='ssh -i {{ ansible_ssh_private_key_file }} -o StrictHostKeyChecking=accept-new -W %h:%p {{ proxmox_user }}@{{ proxmox_ip }}'"
 
+baseline_packages:
+  - curl
+  - ca-certificates
+  - gnupg
+  - sqlite3
+  - rsync
+
 # tailscale
 tailscale_advertise_routes: "10.0.0.0/24"
 tailscale_exit_node: true
