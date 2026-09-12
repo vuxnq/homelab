@@ -1,0 +1,3 @@
+ansible_host: "{{ apps_host_ip }}"
+ansible_user: "debian"
+ansible_become: true

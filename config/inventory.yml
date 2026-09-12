@@ -1,14 +1,12 @@
 all:
   children:
+    proxmox:
+      hosts:
+        pve: {}
     network:
       hosts:
-        ts_router:
-          ansible_host: 10.0.0.2
-        pihole:
-          ansible_host: 10.0.0.3
+        ts_router: {}
+        pihole: {}
     vms:
       hosts:
-        apps_host:
-          ansible_host: 10.0.0.4
-          ansible_user: "debian"
-          ansible_become: true
+        apps_host: {}

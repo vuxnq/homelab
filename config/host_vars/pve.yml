@@ -1,0 +1,2 @@
+ansible_host: "{{ proxmox_ip }}"
+ansible_ssh_common_args: ""

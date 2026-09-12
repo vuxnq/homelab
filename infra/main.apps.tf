@@ -19,7 +19,10 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
     }
   }
 
-  cpu { cores = var.cpu_apps_cores }
+  cpu {
+    cores = var.cpu_apps_cores 
+    type = "x86-64-v2-AES"
+  }
 
   memory {
     dedicated = var.mem_apps_max

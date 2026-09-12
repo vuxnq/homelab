@@ -8,6 +8,10 @@ proxmox_ip: "192.168.0.2"
 
 ansible_ssh_common_args: "-o ProxyCommand='ssh -i {{ ansible_ssh_private_key_file }} -o StrictHostKeyChecking=accept-new -W %h:%p {{ proxmox_user }}@{{ proxmox_ip }}'"
 
+ts_router_ip: "10.0.0.2" # TODO: more musim to nejak uklidit tady
+pihole_ip: "10.0.0.3"
+apps_host_ip: "10.0.0.4"
+
 baseline_packages:
   - curl
   - ca-certificates
