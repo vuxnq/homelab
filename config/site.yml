@@ -22,3 +22,4 @@
     - docker
     - apps
     - docker_maintenance
+    - apps_backup

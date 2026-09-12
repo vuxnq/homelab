@@ -1,0 +1,53 @@
+---
+
+- name: install restic
+  ansible.builtin.apt:
+    name: restic
+    state: present
+    update_cache: true
+
+- name: check if resticprofile is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/resticprofile
+  register: resticprofile_bin
+
+- name: install resticprofile
+  ansible.builtin.shell:
+    cmd: curl -sfL https://raw.githubusercontent.com/creativeprojects/resticprofile/master/install.sh | sh -s -- -b /usr/local/bin
+  when: not resticprofile_bin.stat.exists
+
+- name: ensure /etc/resticprofile exists
+  ansible.builtin.file:
+    path: /etc/resticprofile
+    state: directory
+    mode: "0700"
+
+- name: write restic repo password
+  ansible.builtin.copy:
+    dest: /etc/resticprofile/password # maybe secret
+    content: "{{ apps_backup.restic_password }}"
+    mode: "0600"
+
+- name: deploy resticprofile config
+  ansible.builtin.template:
+    src: profiles.yaml.j2
+    dest: /etc/resticprofile/profiles.yaml
+    mode: "0600"
+
+- name: ensure local backup repo dir exists
+  ansible.builtin.file:
+    path: /backup
+    state: directory
+    owner: root
+    mode: "0700"
+
+- name: initialize local restic repo
+  ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n local init
+  args:
+    creates: "{{ apps_backup_dir }}/config"
+
+# - name: initialize b2 restic repo # TODO
+#   ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n b2 init
+#   register: b2_init
+#   failed_when: b2_init.rc != 0 and 'already initialized' not in (b2_init.stderr | default(''))
+#   changed_when: "'created restic repository' in b2_init.stdout"

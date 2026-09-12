@@ -46,6 +46,8 @@ apps_dirs:
   - path: /mnt/data/syncthing
   - path: /mnt/data/syncthing/config
 
+apps_backup_dir: /backup/restic-repo
+
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
 
@@ -63,3 +65,10 @@ app_secrets:
     DB_USERNAME: ""
     DB_PASSWORD: ""
     DB_DATABASE_NAME: ""
+
+apps_backup:
+  restic_password: ""
+  b2_key_id: ""
+  b2_application_key: ""
+  b2_bucket: ""
+  b2_region: ""

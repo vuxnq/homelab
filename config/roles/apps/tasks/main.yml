@@ -35,3 +35,4 @@
     project_src: "{{ apps_dir }}/{{ item }}"
     state: present
   loop: "{{ apps_services }}"
+  tags: [apps_start]

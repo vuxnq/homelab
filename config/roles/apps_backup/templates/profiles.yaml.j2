@@ -1,0 +1,31 @@
+version: "1"
+
+default:
+  password-file: /etc/resticprofile/password
+  run-before:
+    - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
+  backup:
+    source:
+      - /mnt/data
+    exclude:
+      - /mnt/data/immich/postgres
+      - /mnt/data/immich/ml/cache
+    exclude-caches: true
+    schedule: "03:00"
+    schedule-permission: system
+  forget:
+    keep-daily: 7
+    keep-weekly: 4
+    keep-monthly: 6
+    prune: true
+
+local:
+  inherit: default
+  repository: "{{ apps_backup_dir }}"
+
+# b2: # TODO
+#   inherit: default
+#   repository: "s3:https://s3.{{ apps_backup.b2_region }}.backblazeb2.com/{{ apps_backup.b2_bucket }}"
+#   env:
+#     AWS_ACCESS_KEY_ID: "{{ apps_backup.b2_key_id }}"
+#     AWS_SECRET_ACCESS_KEY: "{{ apps_backup.b2_application_key }}"

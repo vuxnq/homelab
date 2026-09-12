@@ -71,7 +71,7 @@ cd ..
 cd config/
 ansible-galaxy collection install -r requirements.yml
 ansible-playbook site.yml --check --diff
-ansible-playbook site.yml
+ansible-playbook site.yml # if restoring backup add `--skip-tags app_start`
 cd ..
 ```
 
@@ -80,3 +80,23 @@ cd ..
 - go to porkbun and set dns:
     - A record: sheol.vuxnq.me -> 10.0.0.4 (apps_host)
     - CNAME record: *.sheol.vuxnq.me -> sheol.vuxnq.me
+
+### backup restoration
+```sh
+# TODO
+# place restic repo inside /backup/restic-repo
+# (or whatever your apps_backup_dir inside 00-vars.yml is bruh)
+# after that apply config and skip deploying containers
+ansible-playbook site.yml --skip-tags apps_start
+
+# set .ssh/config so you can ssh jump host
+# then ssh into apps-host
+ssh -J root@192.168.0.2 debian@10.0.0.4
+
+sudo resticprofile -c /etc/resticprofile/profiles.yaml -n local restore latest --target /
+# restore immich_postgres dump
+sudo docker compose -f /opt/apps/immich/compose.yaml up -d database
+cat /mnt/data/immich/postgres-dump.sql | sudo docker exec -i immich_postgres psql -U ${DB_USERNAME} # in 99-secrets.yml
+
+ansible-playbook site.yml --tags apps_start
+```
