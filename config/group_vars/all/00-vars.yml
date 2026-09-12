@@ -36,20 +36,15 @@ adlist_urls:
 apps_dir: /opt/apps
 apps_services:
   - caddy
-  - dockhand
   - dufs
   - glance
   - immich
-  - upsnap
   - syncthing
 
-apps_data_dirs:
-  - path: /mnt/data/shared
-    owner: 1000
-    group: 1000
-  - path: /mnt/data/syncthing/sync
-    owner: 1000
-    group: 1000
+apps_dirs:
+  - path: /mnt/data/dufs/shared
+  - path: /mnt/data/syncthing
+  - path: /mnt/data/syncthing/config
 
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
@@ -68,6 +63,3 @@ app_secrets:
     DB_USERNAME: ""
     DB_PASSWORD: ""
     DB_DATABASE_NAME: ""
-  upsnap:
-    SSHUSER: ""
-    SSHPASS: ""

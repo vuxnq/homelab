@@ -1,8 +1,8 @@
 all:
   children:
-    proxmox:
-      hosts:
-        pve: {}
+    # proxmox:
+    #   hosts:
+    #     pve: {}
     network:
       hosts:
         ts_router: {}

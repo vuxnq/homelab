@@ -1,0 +1,8 @@
+[Unit]
+Description=prune old images then update docker compose apps
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/docker-maintenance.sh

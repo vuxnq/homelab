@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "> $(date): pruning unused docker resources"
+docker system prune -af
+
+{% for service in apps_services %}
+echo "> $(date): updating {{ service }}"
+
+compose_args=()
+for f in "{{ apps_dir }}/{{ service }}"/.env*; do
+  [[ -f "$f" ]] && compose_args+=(--env-file "$f")
+done
+
+docker compose "${compose_args[@]}" -f "{{ apps_dir }}/{{ service }}/compose.yaml" pull --quiet || true
+docker compose "${compose_args[@]}" -f "{{ apps_dir }}/{{ service }}/compose.yaml" build --pull --quiet || true
+docker compose "${compose_args[@]}" -f "{{ apps_dir }}/{{ service }}/compose.yaml" up -d --remove-orphans || echo "!!! ${service} failed to start, continuing"
+{% endfor %}
+
+echo "> $(date): maintenance done"

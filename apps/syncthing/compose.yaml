@@ -9,8 +9,8 @@ services:
       PUID: 1000
       PGID: 1000
     volumes:
-      - /mnt/data/syncthing/data:/var/syncthing/config
-      - /mnt/data/syncthing/sync:/var/syncthing
+      - /mnt/data/syncthing/config:/var/syncthing/config
+      - /mnt/data/syncthing:/var/syncthing
     ports:
       - 8384:8384
       - 22000:22000/tcp

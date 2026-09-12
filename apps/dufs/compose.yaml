@@ -8,7 +8,7 @@ services:
     ports: 
       - 5000:5000
     volumes:
-      - /mnt/data/shared:/data/shared
-      - /mnt/data/syncthing/sync:/data/syncthing
+      - /mnt/data/dufs/shared:/data/shared
+      - /mnt/data/syncthing:/data/syncthing
     command: /data -A -a ${DUFS_USER}:${DUFS_PASSWORD}@/syncthing:rw -a @/shared:rw
     restart: unless-stopped

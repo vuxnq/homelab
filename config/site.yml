@@ -21,3 +21,4 @@
     - apps_host
     - docker
     - apps
+    - docker_maintenance
