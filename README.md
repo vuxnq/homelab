@@ -2,7 +2,7 @@
 [proxmox server](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso)
 
 ## requirements
-- porkbun domain, tailscale, 2+ disks
+- porkbun domain, tailscale, 2+ disks, backblaze b2 bucket
 
 ### tools
 ```sh
@@ -85,13 +85,19 @@ cd ..
 ```sh
 # TODO
 # place restic repo inside /backup/restic-repo
-# (or whatever your apps_backup_dir inside 00-vars.yml is bruh)
+# (or whatever your backup_repo inside 00-vars.yml is bruh)
 # after that apply config and skip deploying containers
 ansible-playbook site.yml --skip-tags apps_start
 
-# set .ssh/config so you can ssh jump host
-# then ssh into apps-host
-ssh -J root@192.168.0.2 debian@10.0.0.4
+ssh debian@10.0.0.4
+sudo rm -rf /backup/restic-repo # remove init
+chown 1000:1000 /backup
+
+# rsync repo to backup
+rsync -avz /path/to/restic-repo debian@10.0.0.4:/backup/
+
+# back on server
+chown 0:0 -R /backup
 
 sudo resticprofile -c /etc/resticprofile/profiles.yaml -n local restore latest --target /
 # restore immich_postgres dump

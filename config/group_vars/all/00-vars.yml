@@ -46,7 +46,15 @@ apps_dirs:
   - path: /mnt/data/syncthing
   - path: /mnt/data/syncthing/config
 
-apps_backup_dir: /backup/restic-repo
+# backup
+backup_repo: /backup/restic-repo
+
+backup_pre_hooks:
+  - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
+
+backup_exclude_paths:
+  - /mnt/data/immich/postgres
+  - /mnt/data/immich/ml/cache
 
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
@@ -66,7 +74,7 @@ app_secrets:
     DB_PASSWORD: ""
     DB_DATABASE_NAME: ""
 
-apps_backup:
+backup_secrets:
   restic_password: ""
   b2_key_id: ""
   b2_application_key: ""

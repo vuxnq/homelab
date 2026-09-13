@@ -1,5 +1,9 @@
 ---
 
+- name: wait for cloud-init to finish
+  ansible.builtin.command: cloud-init status --wait
+  changed_when: false
+
 - name: install qemu-guest-agent
   ansible.builtin.apt:
     name: qemu-guest-agent

@@ -24,8 +24,8 @@
 
 - name: write restic repo password
   ansible.builtin.copy:
-    dest: /etc/resticprofile/password # maybe secret
-    content: "{{ apps_backup.restic_password }}"
+    dest: /etc/resticprofile/password
+    content: "{{ backup_secrets.restic_password }}"
     mode: "0600"
 
 - name: deploy resticprofile config
@@ -44,10 +44,10 @@
 - name: initialize local restic repo
   ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n local init
   args:
-    creates: "{{ apps_backup_dir }}/config"
+    creates: "{{ backup_repo }}/config"
 
-# - name: initialize b2 restic repo # TODO
-#   ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n b2 init
-#   register: b2_init
-#   failed_when: b2_init.rc != 0 and 'already initialized' not in (b2_init.stderr | default(''))
-#   changed_when: "'created restic repository' in b2_init.stdout"
+- name: initialize b2 restic repo
+  ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n b2 init
+  register: b2_init
+  failed_when: b2_init.rc != 0 and 'already initialized' not in (b2_init.stderr | default(''))
+  changed_when: "'created restic repository' in b2_init.stdout"
