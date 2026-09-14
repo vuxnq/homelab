@@ -1,11 +1,3 @@
-# resource "proxmox_download_file" "debian_lxc_template" {
-#   content_type = "vztmpl"
-#   datastore_id = "local"
-#   node_name    = local.root_node
-#   url          = "http://download.proxmox.com/images/system/debian-13-standard_13.6-1_amd64.tar.zst"
-#   file_name    = "debian-13-standard_13.6-1_amd64.tar.zst"
-# }
-
 resource "proxmox_virtual_environment_container" "pihole" {
   node_name    = local.root_node
   description  = "pihole dns"
@@ -18,7 +10,7 @@ resource "proxmox_virtual_environment_container" "pihole" {
 
     ip_config {
       ipv4 {
-        address = var.net_pihole_ip
+        address = var.pihole_ip
         gateway = var.net_gateway
       }
     }

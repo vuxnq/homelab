@@ -1,3 +1,13 @@
+variable "debian_lxc_url" {
+  type    = string
+  default = "http://download.proxmox.com/images/system/debian-13-standard_13.6-1_amd64.tar.zst"
+}
+
+variable "debian_cloud_url" {
+  type    = string
+  default = "https://cdimage.debian.org/cdimage/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
+}
+
 variable "pve_ip" {
   type    = string
   default = "192.168.0.2"
@@ -11,7 +21,6 @@ variable "pve_user" {
 variable "pve_password" {
   type      = string
   sensitive = true
-  default   = "a-strong-password"
 }
 
 variable "homelab_ssh_key_path" {
@@ -39,42 +48,42 @@ variable "net_gateway" {
   default = "10.0.0.1"
 }
 
-variable "net_ts_ip" {
+variable "ts_router_ip" {
   type    = string
   default = "10.0.0.2/24"
 }
 
-variable "net_pihole_ip" {
+variable "pihole_ip" {
   type    = string
   default = "10.0.0.3/24"
 }
 
-variable "net_apps_ip" {
+variable "apps_host_ip" {
   type    = string
   default = "10.0.0.4/24"
 }
 
-variable "mem_apps_max" {
-  type    = number
-  default = 12288
-}
-
-variable "mem_apps_min" {
+variable "apps_host_mem_min" {
   type    = number
   default = 4096
 }
 
-variable "cpu_apps_cores" {
+variable "apps_host_mem_max" {
+  type    = number
+  default = 12288
+}
+
+variable "apps_host_cpu_cores" {
   type    = number
   default = 4
 }
 
-variable "disk_apps_size" {
+variable "apps_host_disk_size" {
   type    = number
   default = 64
 }
 
-variable "disk_data_apps_size" {
+variable "apps_host_disk_data_size" {
   type    = number
   default = 512
 }
