@@ -10,8 +10,10 @@ default:
     source:
       - /mnt/data
     exclude:
-{% for path in backup_exclude_paths %}
+{% for app in apps | default([]) %}
+{% for path in app.backup_exclude | default([]) %}
       - "{{ path }}"
+{% endfor %}
 {% endfor %}
     exclude-caches: true
     schedule: "03:00"

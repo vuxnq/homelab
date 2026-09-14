@@ -12,6 +12,21 @@ ts_router_ip: "10.0.0.2"
 pihole_ip: "10.0.0.3"
 apps_host_ip: "10.0.0.4"
 
+apps:
+  - name: caddy
+  - name: dufs
+    dirs:
+      - path: /mnt/data/dufs/shared
+  - name: glance
+  - name: immich
+    backup_exclude:
+      - /mnt/data/immich/postgres
+      - /mnt/data/immich/ml/cache
+  - name: syncthing
+    dirs:
+      - path: /mnt/data/syncthing
+      - path: /mnt/data/syncthing/config
+
 backup_pre_hoooks:
   - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
 

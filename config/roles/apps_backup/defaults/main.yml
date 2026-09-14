@@ -1,5 +1,2 @@
 backup_repo: /backup/restic-repo
 backup_pre_hooks: []
-backup_exclude_paths:
-  - /mnt/data/immich/postgres
-  - /mnt/data/immich/ml/cache

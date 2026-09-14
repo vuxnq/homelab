@@ -1,9 +1,9 @@
 ---
 
-- name: deploy docker maintenance script
+- name: deploy apps maintenance script
   ansible.builtin.template:
-    src: docker-maintenance.sh.j2
-    dest: /usr/local/bin/docker-maintenance.sh
+    src: apps-maintenance.sh.j2
+    dest: /usr/local/bin/apps-maintenance.sh
     mode: "0755"
 
 - name: deploy systemd units
@@ -12,13 +12,13 @@
     dest: "/etc/systemd/system/{{ item }}"
     mode: "0644"
   loop:
-    - docker-maintenance.service
-    - docker-maintenance.timer
+    - apps-maintenance.service
+    - apps-maintenance.timer
   notify: reload systemd
 
-- name: enable docker maintenance timer
+- name: enable apps maintenance timer
   ansible.builtin.systemd:
-    name: docker-maintenance.timer
+    name: apps-maintenance.timer
     enabled: true
     state: started
     daemon_reload: true

@@ -26,18 +26,19 @@
   loop: "{{ app_secrets | dict2items }}"
   no_log: true
 
+# apps[].dirs[] -> (app, dir) pairs
 - name: ensure app directories exist
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: "{{ item.1.path }}"
     state: directory
-    owner: "{{ item.owner | default('1000') }}"
-    group: "{{ item.group | default('1000') }}"
-    mode: "{{ item.mode | default('0755') }}"
-  loop: "{{ apps_dirs }}"
+    owner: "{{ item.1.owner | default('1000') }}"
+    group: "{{ item.1.group | default('1000') }}"
+    mode: "{{ item.1.mode | default('0755') }}"
+  loop: "{{ apps | subelements('dirs', skip_missing=True) }}"
 
 - name: deploy each compose project
   community.docker.docker_compose_v2:
-    project_src: "{{ apps_dir }}/{{ item }}"
+    project_src: "{{ apps_dir }}/{{ item.name }}"
     state: present
-  loop: "{{ apps_services }}"
+  loop: "{{ apps }}"
   tags: [apps_start]
