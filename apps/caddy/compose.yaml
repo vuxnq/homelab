@@ -19,3 +19,4 @@ services:
     environment:
       PORKBUN_API_KEY: ${PORKBUN_API_KEY}
       PORKBUN_API_SECRET_KEY: ${PORKBUN_API_SECRET_KEY}
+      ACME_EMAIL: ${ACME_EMAIL}

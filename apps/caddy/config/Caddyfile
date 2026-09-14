@@ -1,58 +1,51 @@
 {
-  acme_dns porkbun {
-    api_key {$PORKBUN_API_KEY}
-    api_secret_key {$PORKBUN_API_SECRET_KEY}
+  email {$ACME_EMAIL}
+  acme_ca https://acme.zerossl.com/v2/DV90
+}
+
+tux.vuxnq.me, *.tux.vuxnq.me {
+  tls {
+    dns porkbun {
+      api_key {$PORKBUN_API_KEY}
+      api_secret_key {$PORKBUN_API_SECRET_KEY}
+    }
   }
-}
 
-sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:8080
-}
+  @root host tux.vuxnq.me
+  handle @root {
+    reverse_proxy host.docker.internal:8080
+  }
 
-dockhand.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:3000
-}
+  @proxmox host proxmox.tux.vuxnq.me
+  handle @proxmox {
+    reverse_proxy https://10.0.0.1:8006 {
+      transport http {
+        tls_insecure_skip_verify
+      }
+    }
+  }
 
-dufs.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:5000
-}
+  @immich host immich.tux.vuxnq.me
+  handle @immich {
+    reverse_proxy host.docker.internal:2283
+  }
 
-immich.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:2283
-}
+  @dufs host dufs.tux.vuxnq.me
+  handle @dufs {
+    reverse_proxy host.docker.internal:5000
+  }
 
-navidrome.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:4533
-}
+  @syncthing host syncthing.tux.vuxnq.me
+  handle @syncthing {
+    reverse_proxy host.docker.internal:8384
+  }
 
-pihole.sheol.vuxnq.me {
-  reverse_proxy 10.0.0.3:80
-}
+  @pihole host pihole.tux.vuxnq.me
+  handle @pihole {
+    reverse_proxy 10.0.0.3:80
+  }
 
-cups.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:631
-}
-
-slskd.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:5030
-}
-
-silverbullet.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:3001
-}
-
-syncthing.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:8384
-}
-
-upsnap.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:8090
-}
-
-wrtag.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:4848
-}
-
-zerobyte.sheol.vuxnq.me {
-  reverse_proxy host.docker.internal:4096
+  handle {
+    abort
+  }
 }

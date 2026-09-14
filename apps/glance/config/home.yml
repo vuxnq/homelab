@@ -25,20 +25,29 @@
           hide-header: true
           servers:
             - type: local
-              name: sheol
-              hide-mountpoints-by-default: true
+              name: apps
               mountpoints:
                 "/":
                   name: root
                   hide: false
+                "/mnt/data":
+                  name: data
+                  hide: false
+        - type: monitor
+          cache: 1m
+          hide-header: true
+          sites:
+            - title: pihole
+              url: https://pihole.tux.vuxnq.me/admin
+              icon: di:pi-hole
+              same-tab: true
         - type: dns-stats
           hide-header: true
           service: pihole-v6
-          url: https://pihole.sheol.vuxnq.me
+          url: https://pihole.tux.vuxnq.me
           password: ${PIHOLE_PASSWORD}
+          hour-format: 24h
         $include: home.lastfm.yml
-        - type: to-do
-          hide-header: true
     - size: full
       widgets:
         $include: home.bookmarks.yml
