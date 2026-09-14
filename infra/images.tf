@@ -7,7 +7,7 @@ resource "proxmox_download_file" "debian_lxc_template" {
 }
 
 resource "proxmox_download_file" "debian_cloud_image" {
-  content_type = "iso"
+  content_type = "import"
   datastore_id = "local"
   node_name    = local.root_node
   url          = var.debian_cloud_url
