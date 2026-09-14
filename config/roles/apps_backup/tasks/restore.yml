@@ -1,0 +1,27 @@
+---
+
+- name: ensure all docker containers are down
+  ansible.builtin.shell: docker ps -q | xargs -r docker stop
+  register: docker_stop
+  changed_when: docker_stop.stdout | length > 0
+
+- name: seed local restic repo from a local path (only when one is given)
+  block:
+    - name: remove freshly-initialized local repo before restoring
+      ansible.builtin.file:
+        path: "{{ backup_repo }}"
+        state: absent
+
+    - name: rsync local restic repo to host
+      ansible.posix.synchronize:
+        src: "{{ restore_repo_path }}/"
+        dest: "{{ backup_repo }}/"
+        use_ssh_args: true
+  when: restore_repo_path is defined
+
+- name: restore latest snapshot from "{{ restore_profile }}" repo
+  ansible.builtin.command: "resticprofile -c /etc/resticprofile/profiles.yaml -n {{ restore_profile }} restore latest --target /"
+
+- name: run post-restore hooks
+  ansible.builtin.shell: "{{ item }}"
+  loop: "{{ backup_restore_hooks }}"

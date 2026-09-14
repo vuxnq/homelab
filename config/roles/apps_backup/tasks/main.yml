@@ -51,3 +51,7 @@
   register: b2_init
   failed_when: b2_init.rc != 0 and 'already initialized' not in (b2_init.stderr | default(''))
   changed_when: "'created restic repository' in b2_init.stdout"
+
+- name: restore backup
+  ansible.builtin.import_tasks: restore.yml
+  tags: [never, restore]

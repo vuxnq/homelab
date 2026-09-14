@@ -28,7 +28,9 @@ apps:
       - path: /mnt/data/syncthing/config
 
 backup_pre_hooks:
-  - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
+  - "mkdir -p /mnt/data/immich && docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql && test -s /mnt/data/immich/postgres-dump.sql"
+backup_restore_hooks:
+  - "docker compose -f {{ apps_dir }}/immich/compose.yaml up -d --wait database && cat /mnt/data/immich/postgres-dump.sql | docker exec -i immich_postgres psql -U {{ app_secrets.immich.DB_USERNAME }}"
 
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""

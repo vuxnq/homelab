@@ -53,7 +53,7 @@ nvim config/group_vars/all/99-secrets.yml
 ```yaml
 # homelab/config/group_vars/all/99-secrets.yml
 
-#configuring tailscale_authkey
+# configuring tailscale_authkey
 # variables are in config/group_vars/all/00-vars.yml
 tailscale_authkey: "tskey-auth-xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
@@ -71,7 +71,7 @@ cd ..
 cd config/
 ansible-galaxy collection install -r requirements.yml
 ansible-playbook site.yml --check --diff
-ansible-playbook site.yml # if restoring backup add `--skip-tags app_start`
+ansible-playbook site.yml
 cd ..
 ```
 
@@ -83,26 +83,18 @@ cd ..
 
 ### backup restoration
 ```sh
-# TODO
-# place restic repo inside /backup/restic-repo
-# (or whatever your backup_repo inside 00-vars.yml is bruh)
-# after that apply config and skip deploying containers
+# deploy config without starting containers
 ansible-playbook site.yml --skip-tags apps_start
 
-ssh debian@10.0.0.4
-sudo rm -rf /backup/restic-repo # remove init
-chown 1000:1000 /backup
+# restore latest snapshot (defaults to the local repo already on the host)
+ansible-playbook site.yml --tags restore
 
-# rsync repo to backup
-rsync -avz /path/to/restic-repo debian@10.0.0.4:/backup/
+# ...or seed the local repo from an existing copy
+ansible-playbook site.yml --tags restore -e restore_repo_path=/path/to/restic-repo
 
-# back on server
-chown 0:0 -R /backup
+# ...or restore straight from the offsite backup (b2)
+ansible-playbook site.yml --tags restore -e restore_profile=b2
 
-sudo resticprofile -c /etc/resticprofile/profiles.yaml -n local restore latest --target /
-# restore immich_postgres dump
-sudo docker compose -f /opt/apps/immich/compose.yaml up -d database
-cat /mnt/data/immich/postgres-dump.sql | sudo docker exec -i immich_postgres psql -U ${DB_USERNAME} # in 99-secrets.yml
-
+# start the apps
 ansible-playbook site.yml --tags apps_start
 ```

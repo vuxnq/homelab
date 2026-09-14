@@ -1,2 +1,4 @@
 backup_repo: /backup/restic-repo
+restore_profile: local
 backup_pre_hooks: []
+backup_restore_hooks: []
