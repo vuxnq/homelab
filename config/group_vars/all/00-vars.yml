@@ -59,16 +59,19 @@ backup_exclude_paths:
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
 
+pihole_password: ""
+
 app_secrets:
   caddy:
     PORKBUN_API_KEY: ""
     PORKBUN_API_SECRET_KEY: ""
+    ACME_EMAIL: ""
   dufs:
     DUFS_USER: ""
     DUFS_PASSWORD: ""
   glance:
     LASTFM_API_KEY: ""
-    PIHOLE_PASSWORD: ""
+    PIHOLE_PASSWORD: "{{ pihole_password }}"
   immich:
     DB_USERNAME: ""
     DB_PASSWORD: ""

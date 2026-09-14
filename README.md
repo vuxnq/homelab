@@ -78,8 +78,8 @@ cd ..
 ### post deployment
 - go to tailscale and approve subnet routes and exit node request
 - go to porkbun and set dns:
-    - A record: sheol.vuxnq.me -> 10.0.0.4 (apps_host)
-    - CNAME record: *.sheol.vuxnq.me -> sheol.vuxnq.me
+    - A record: tux.vuxnq.me -> 10.0.0.4 (apps_host)
+    - CNAME record: *.tux.vuxnq.me -> tux.vuxnq.me
 
 ### backup restoration
 ```sh

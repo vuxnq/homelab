@@ -42,6 +42,28 @@
     enabled: true
     state: started
 
+- name: create systemd override dir for pihole-FTL
+  ansible.builtin.file:
+    path: /etc/systemd/system/pihole-FTL.service.d
+    state: directory
+    mode: "0755"
+
+- name: write pihole-FTL password env file
+  ansible.builtin.copy:
+    dest: /etc/pihole/webserver-api-password.env
+    content: "FTLCONF_webserver_api_password={{ pihole_password }}\n"
+    mode: "0600"
+  notify: restart pihole-FTL
+
+- name: deploy systemd override for pihole-FTL
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/pihole-FTL.service.d/override.conf
+    content: |
+      [Service]
+      EnvironmentFile=/etc/pihole/webserver-api-password.env
+    mode: "0644"
+  notify: restart pihole-FTL
+
 - name: get current adlist URLs from gravity.db
   ansible.builtin.command: sqlite3 /etc/pihole/gravity.db "SELECT address FROM adlist;"
   register: current_adlist
