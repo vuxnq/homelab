@@ -27,7 +27,7 @@ apps:
       - path: /mnt/data/syncthing
       - path: /mnt/data/syncthing/config
 
-backup_pre_hoooks:
+backup_pre_hooks:
   - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
 
 # secrets - create 99-secrets.yml
