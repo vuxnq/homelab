@@ -8,7 +8,7 @@
 - name: configure subnet router
   hosts: ts_router
   roles:
-    - tailscale
+    - ts_router
 
 - name: configure pihole
   hosts: pihole
@@ -20,6 +20,6 @@
   roles:
     - apps_host
     - docker
-    - apps
-    - docker_maintenance
+    - apps_deploy
+    - apps_maintenance
     - apps_backup

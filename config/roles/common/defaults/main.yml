@@ -1,0 +1,4 @@
+baseline_packages:
+  - curl
+  - ca-certificates
+  - gnupg

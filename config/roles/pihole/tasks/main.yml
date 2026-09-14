@@ -1,5 +1,10 @@
 ---
 
+- name: ensure sqlite3 is present
+  ansible.builtin.apt:
+    name: sqlite3
+    state: present
+
 - name: create pihole group
   ansible.builtin.group:
     name: pihole

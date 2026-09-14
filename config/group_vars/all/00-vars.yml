@@ -4,57 +4,16 @@ ansible_ssh_private_key_file: "~/.ssh/keys/homelab.key"
 ansible_user: "root"
 
 proxmox_user: "root"
-proxmox_ip: "192.168.0.2"
+proxmox_ip: "10.0.0.1"
 
 ansible_ssh_common_args: "-o ProxyCommand='ssh -i {{ ansible_ssh_private_key_file }} -o StrictHostKeyChecking=accept-new -W %h:%p {{ proxmox_user }}@{{ proxmox_ip }}'"
 
-ts_router_ip: "10.0.0.2" # TODO: more musim to nejak uklidit tady
+ts_router_ip: "10.0.0.2"
 pihole_ip: "10.0.0.3"
 apps_host_ip: "10.0.0.4"
 
-baseline_packages:
-  - curl
-  - ca-certificates
-  - gnupg
-  - sqlite3
-  - rsync
-
-# tailscale
-tailscale_advertise_routes: "10.0.0.0/24"
-tailscale_exit_node: true
-
-# pihole
-pihole_upstream_dns:
-  - "1.1.1.1"
-  - "1.0.0.1"
-
-adlist_urls:
-  - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
-  - "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
-
-# apps
-apps_dir: /opt/apps
-apps_services:
-  - caddy
-  - dufs
-  - glance
-  - immich
-  - syncthing
-
-apps_dirs:
-  - path: /mnt/data/dufs/shared
-  - path: /mnt/data/syncthing
-  - path: /mnt/data/syncthing/config
-
-# backup
-backup_repo: /backup/restic-repo
-
-backup_pre_hooks:
+backup_pre_hoooks:
   - "docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql"
-
-backup_exclude_paths:
-  - /mnt/data/immich/postgres
-  - /mnt/data/immich/ml/cache
 
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""

@@ -1,5 +1,10 @@
 ---
 
+- name: ensure rsync is present
+  ansible.builtin.apt:
+    name: rsync
+    state: present
+
 - name: sync apps directory to host
   ansible.posix.synchronize:
     src: "{{ playbook_dir }}/../apps/"
