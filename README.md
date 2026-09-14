@@ -86,14 +86,10 @@ cd ..
 # deploy config without starting containers
 ansible-playbook site.yml --skip-tags apps_start
 
-# restore latest snapshot (defaults to the local repo already on the host)
 ansible-playbook site.yml --tags restore
-
-# ...or seed the local repo from an existing copy
-ansible-playbook site.yml --tags restore -e restore_repo_path=/path/to/restic-repo
-
-# ...or restore straight from the offsite backup (b2)
-ansible-playbook site.yml --tags restore -e restore_profile=b2
+# optional vars:
+#   -e restore_repo_path=/path/to/restic-repo  # seed the local repo from an existing copy
+#   -e restore_profile=b2                      # restore straight from the offsite b2 repo
 
 # start the apps
 ansible-playbook site.yml --tags apps_start
