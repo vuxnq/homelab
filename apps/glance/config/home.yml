@@ -33,6 +33,9 @@
                 "/mnt/data":
                   name: data
                   hide: false
+                "/mnt/backups":
+                  name: backups
+                  hide: false
         - type: monitor
           cache: 1m
           hide-header: true

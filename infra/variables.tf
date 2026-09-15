@@ -38,6 +38,12 @@ variable "disk_data_name" {
   default = "hdd-storage"
 }
 
+variable "disk_backup_name" {
+  type    = string
+  # default = "hdd-backup" # TODO: dedicated backup disk
+  default = "hdd-storage"
+}
+
 variable "net_cidr" {
   type    = string
   default = "10.0.0.0/24"
@@ -86,4 +92,9 @@ variable "apps_host_disk_size" {
 variable "apps_host_disk_data_size" {
   type    = number
   default = 512
+}
+
+variable "apps_host_disk_backup_size" {
+  type    = number
+  default = 256
 }

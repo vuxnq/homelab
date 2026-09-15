@@ -34,3 +34,6 @@ b2:
   env:
     AWS_ACCESS_KEY_ID: "{{ backup_secrets.b2_key_id }}"
     AWS_SECRET_ACCESS_KEY: "{{ backup_secrets.b2_application_key }}"
+  backup:
+    schedule: "03:00"
+    schedule-permission: system

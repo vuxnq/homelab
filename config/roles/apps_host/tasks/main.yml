@@ -26,3 +26,15 @@
     src: /dev/vdb
     fstype: ext4
     state: mounted
+
+- name: create filesystem on backup disk
+  community.general.filesystem:
+    fstype: ext4
+    dev: /dev/vdc
+
+- name: mount backup disk
+  ansible.posix.mount:
+    path: /mnt/backups
+    src: /dev/vdc
+    fstype: ext4
+    state: mounted

@@ -16,8 +16,9 @@ sudo dnf install opentofu ansible rsync
 - go to disks. find hdd and wipe
 - disks -> lvm-thin
 - create: thinpool
-    - disk: select hdd
+    - disk: select hdd for data
     - name: `hdd-storage`
+<!-- TODO: buy a dedicated backup disk `hdd-backup` -->
 
 ### generate ssh key
 ```sh

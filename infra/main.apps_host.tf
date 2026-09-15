@@ -39,6 +39,13 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
     size         = var.apps_host_disk_data_size
   }
 
+  disk {
+    datastore_id = var.disk_backup_name
+    interface    = "virtio2"
+    file_format  = "raw"
+    size         = var.apps_host_disk_backup_size
+  }
+
   initialization {
     ip_config {
       ipv4 {

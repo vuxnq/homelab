@@ -34,13 +34,6 @@
     dest: /etc/resticprofile/profiles.yaml
     mode: "0600"
 
-- name: ensure local backup repo dir exists
-  ansible.builtin.file:
-    path: /backup
-    state: directory
-    owner: root
-    mode: "0700"
-
 - name: initialize local restic repo
   ansible.builtin.command: resticprofile -c /etc/resticprofile/profiles.yaml -n local init
   args:
