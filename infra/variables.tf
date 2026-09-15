@@ -40,8 +40,8 @@ variable "disk_data_name" {
 
 variable "disk_backup_name" {
   type    = string
-  # default = "hdd-backup" # TODO: dedicated backup disk
   default = "hdd-storage"
+  # default = "hdd-backup" # TODO: dedicated backup disk
 }
 
 variable "net_cidr" {

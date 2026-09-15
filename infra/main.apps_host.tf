@@ -40,10 +40,11 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
   }
 
   disk {
-    datastore_id = var.disk_backup_name
-    interface    = "virtio2"
-    file_format  = "raw"
-    size         = var.apps_host_disk_backup_size
+    datastore_id      = proxmox_virtual_environment_vm.disk_holder.disk[0].datastore_id
+    path_in_datastore = proxmox_virtual_environment_vm.disk_holder.disk[0].path_in_datastore
+    interface         = "virtio2"
+    file_format       = proxmox_virtual_environment_vm.disk_holder.disk[0].file_format
+    size              = proxmox_virtual_environment_vm.disk_holder.disk[0].size
   }
 
   initialization {
