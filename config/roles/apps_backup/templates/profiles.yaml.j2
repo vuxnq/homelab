@@ -2,6 +2,7 @@ version: "1"
 
 default:
   password-file: /etc/resticprofile/password
+  force-inactive-lock: true
   backup:
     run-before:
 {% for hook in backup_pre_hooks %}
@@ -16,8 +17,6 @@ default:
 {% endfor %}
 {% endfor %}
     exclude-caches: true
-    schedule: "03:00"
-    schedule-permission: system
   forget:
     keep-daily: 7
     keep-weekly: 4
@@ -27,6 +26,18 @@ default:
 local:
   inherit: default
   repository: "{{ backup_repo }}"
+  env:
+    AWS_ACCESS_KEY_ID: "{{ backup_secrets.b2_key_id }}"
+    AWS_SECRET_ACCESS_KEY: "{{ backup_secrets.b2_application_key }}"
+  backup:
+    schedule: "03:00"
+    schedule-permission: system
+  copy:
+    initialize: true
+    repository: "s3:https://s3.{{ backup_secrets.b2_region }}.backblazeb2.com/{{ backup_secrets.b2_bucket }}"
+    password-file: /etc/resticprofile/password
+    schedule: "03:30"
+    schedule-permission: system
 
 b2:
   inherit: default
@@ -34,6 +45,3 @@ b2:
   env:
     AWS_ACCESS_KEY_ID: "{{ backup_secrets.b2_key_id }}"
     AWS_SECRET_ACCESS_KEY: "{{ backup_secrets.b2_application_key }}"
-  backup:
-    schedule: "03:00"
-    schedule-permission: system
