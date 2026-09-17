@@ -81,7 +81,7 @@ variable "apps_host_mem_max" {
 
 variable "apps_host_cpu_cores" {
   type    = number
-  default = 4
+  default = 6
 }
 
 variable "apps_host_disk_size" {
