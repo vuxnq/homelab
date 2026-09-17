@@ -21,10 +21,6 @@ services:
     restart: always
     healthcheck:
       disable: false
-    deploy:
-      resources:
-        limits:
-          memory: 2048M
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -34,10 +30,6 @@ services:
     restart: always
     healthcheck:
       disable: false
-    deploy:
-      resources:
-        limits:
-          memory: 1500M
 
   redis:
     container_name: immich_redis
