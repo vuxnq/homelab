@@ -17,6 +17,7 @@ apps:
   - name: dufs
     dirs:
       - path: /mnt/data/dufs/shared
+  - name: gatus
   - name: glance
   - name: immich
     backup_exclude:
@@ -31,6 +32,10 @@ backup_pre_hooks:
   - "mkdir -p /mnt/data/immich && docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql && test -s /mnt/data/immich/postgres-dump.sql"
 backup_restore_hooks:
   - "docker compose -f {{ apps_dir }}/immich/compose.yaml up -d --wait database && cat /mnt/data/immich/postgres-dump.sql | docker exec -i immich_postgres psql -U {{ app_secrets.immich.DB_USERNAME }}"
+backup_success_hooks:
+  - "curl -s -X POST 'http://localhost:8081/api/v1/endpoints/backup_apps-host-backup/external?success=true' -H 'Authorization: Bearer {{ app_secrets.gatus.BACKUP_ENDPOINT_TOKEN }}'"
+backup_failure_hooks:
+  - "curl -s -X POST 'http://localhost:8081/api/v1/endpoints/backup_apps-host-backup/external?success=false' -H 'Authorization: Bearer {{ app_secrets.gatus.BACKUP_ENDPOINT_TOKEN }}'"
 
 # secrets - create 99-secrets.yml
 tailscale_authkey: ""
@@ -45,6 +50,9 @@ app_secrets:
   dufs:
     DUFS_USER: ""
     DUFS_PASSWORD: ""
+  gatus:
+    DISCORD_WEBHOOK_URL: ""
+    BACKUP_ENDPOINT_TOKEN: ""
   glance:
     LASTFM_API_KEY: ""
     PIHOLE_PASSWORD: "{{ pihole_password }}"

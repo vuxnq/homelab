@@ -8,6 +8,14 @@ default:
 {% for hook in backup_pre_hooks %}
       - "{{ hook }}"
 {% endfor %}
+    run-after:
+{% for hook in backup_success_hooks %}
+      - "{{ hook }}"
+{% endfor %}
+    run-after-fail:
+{% for hook in backup_failure_hooks %}
+      - "{{ hook }}"
+{% endfor %}
     source:
       - /mnt/data
     exclude:

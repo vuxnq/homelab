@@ -14,6 +14,13 @@
       same-tab: true
       description: file server
 
+    gatus:
+      name: gatus
+      icon: di:gatus
+      url: https://gatus.tux.vuxnq.me
+      same-tab: true
+      description: service monitoring
+
     glance:
       name: glance
       icon: sh:glance

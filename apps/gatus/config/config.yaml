@@ -1,0 +1,51 @@
+storage:
+  type: sqlite
+  path: /data/gatus.db
+
+alerting:
+  discord:
+    webhook-url: "${DISCORD_WEBHOOK_URL}"
+    default-alert:
+      failure-threshold: 2
+      success-threshold: 2
+      send-on-resolved: true
+
+external-endpoints:
+  - name: apps-host-backup
+    group: backup
+    token: "${BACKUP_ENDPOINT_TOKEN}"
+    heartbeat-interval: 25h
+
+endpoints:
+  - name: immich
+    url: "https://immich.tux.vuxnq.me"
+    interval: 2m
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: dufs
+    url: "https://dufs.tux.vuxnq.me"
+    interval: 2m
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: syncthing
+    url: "https://syncthing.tux.vuxnq.me"
+    interval: 2m
+    conditions:
+      - "[STATUS] == 200"
+
+  - name: pihole-dns
+    url: "10.0.0.3:53"
+    interval: 5m
+    dns:
+      query-name: "google.com"
+      query-type: "A"
+    conditions:
+      - "[DNS_RCODE] == NOERROR"
+
+  - name: caddy-cert-tux
+    url: "https://tux.vuxnq.me"
+    interval: 1h
+    conditions:
+      - "[CERTIFICATE_EXPIRATION] > 240h"

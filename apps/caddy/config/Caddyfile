@@ -25,6 +25,11 @@ tux.vuxnq.me, *.tux.vuxnq.me {
     }
   }
 
+  @gatus host gatus.tux.vuxnq.me
+  handle @gatus {
+    reverse_proxy host.docker.internal:8081
+  }
+
   @immich host immich.tux.vuxnq.me
   handle @immich {
     reverse_proxy host.docker.internal:2283

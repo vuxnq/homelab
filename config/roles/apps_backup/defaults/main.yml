@@ -2,3 +2,5 @@ backup_repo: /mnt/backups/apps-data
 restore_profile: local
 backup_pre_hooks: []
 backup_restore_hooks: []
+backup_success_hooks: []
+backup_failure_hooks: []
