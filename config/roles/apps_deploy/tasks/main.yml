@@ -13,6 +13,7 @@
     use_ssh_args: true
     rsync_opts:
       - "--exclude=.git"
+      - "--exclude=.env"
   notify: reload caddy
 
 # dict2items turns app_secrets into a list of {key: "caddy", value: {PORKBUN_API_KEY: ..., ...}} pairs

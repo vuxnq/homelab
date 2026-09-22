@@ -1,5 +1,23 @@
 ---
 
+- name: install nftables
+  ansible.builtin.apt:
+    name: nftables
+    state: present
+
+- name: deploy nftables ruleset
+  ansible.builtin.template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+    mode: "0644"
+  notify: restart nftables
+
+- name: ensure nftables is enabled and running
+  ansible.builtin.systemd:
+    name: nftables
+    enabled: true
+    state: started
+
 - name: add tailscale's gpg key
   ansible.builtin.get_url:
     url: https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg

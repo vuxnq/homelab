@@ -1,2 +1,5 @@
 tailscale_advertise_routes: "10.0.0.0/24"
 tailscale_exit_node: true
+
+ts_router_lan_iface: eth0
+ts_router_tailscale_iface: tailscale0

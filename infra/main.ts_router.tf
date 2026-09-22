@@ -14,6 +14,11 @@ resource "proxmox_virtual_environment_container" "ts_router" {
         gateway = var.net_gateway
       }
     }
+
+    ip_config {
+      ipv4 { address = "dhcp" }
+    }
+
     user_account { keys = [local.homelab_ssh_key] }
   }
 
@@ -24,6 +29,11 @@ resource "proxmox_virtual_environment_container" "ts_router" {
   network_interface {
     name   = "eth0"
     bridge = proxmox_sdn_vnet.vnet_internal.id
+  }
+
+  network_interface {
+    name   = "eth1"
+    bridge = "vmbr0"
   }
 
   disk {
