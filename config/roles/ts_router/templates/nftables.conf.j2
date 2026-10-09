@@ -5,6 +5,11 @@ flush ruleset
 table inet filter {
   chain input {
     type filter hook input priority 0; policy accept;
+
+    iifname "{{ ts_router_home_iface }}" ct state established,related accept
+    iifname "{{ ts_router_home_iface }}" udp sport 67 udp dport 68 accept
+    iifname "{{ ts_router_home_iface }}" meta l4proto { icmp, icmpv6 } accept
+    iifname "{{ ts_router_home_iface }}" drop
   }
 
   chain forward {
@@ -12,8 +17,12 @@ table inet filter {
 
     ct state established,related accept
 
-    iifname "{{ ts_router_tailscale_iface }}" oifname "{{ ts_router_lan_iface }}" accept
-    iifname "{{ ts_router_lan_iface }}" oifname "{{ ts_router_tailscale_iface }}" accept
+    iifname "{{ ts_router_tailscale_iface }}" oifname "{{ ts_router_internal_iface }}" accept
+    iifname "{{ ts_router_internal_iface }}" oifname "{{ ts_router_tailscale_iface }}" accept
+
+{% for f in ts_router_forwards %}
+    iifname "{{ ts_router_home_iface }}" oifname "{{ ts_router_internal_iface }}" ip daddr {{ f.to }} {{ f.proto }} dport {{ f.to_port | default(f.port) }} accept
+{% endfor %}
   }
 
   chain output {
@@ -22,8 +31,15 @@ table inet filter {
 }
 
 table inet nat {
+  chain prerouting {
+    type nat hook prerouting priority dstnat; policy accept;
+{% for f in ts_router_forwards %}
+    iifname "{{ ts_router_home_iface }}" {{ f.proto }} dport {{ f.port }} dnat ip to {{ f.to }}:{{ f.to_port | default(f.port) }}
+{% endfor %}
+  }
+
   chain postrouting {
     type nat hook postrouting priority 100; policy accept;
-    oifname "{{ ts_router_lan_iface }}" masquerade
+    oifname "{{ ts_router_internal_iface }}" masquerade
   }
 }

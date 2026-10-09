@@ -57,5 +57,10 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
     user_account { keys = [local.homelab_ssh_key] }
   }
 
+  lifecycle {
+    ignore_changes = [disk[0].file_id]
+    prevent_destroy = true
+  }
+
   depends_on = [proxmox_sdn_applier.subnet_applier]
 }

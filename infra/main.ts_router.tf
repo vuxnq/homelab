@@ -16,7 +16,7 @@ resource "proxmox_virtual_environment_container" "ts_router" {
     }
 
     ip_config {
-      ipv4 { address = "dhcp" }
+      ipv4 { address = var.ts_router_ip_lan }
     }
 
     user_account { keys = [local.homelab_ssh_key] }
@@ -44,6 +44,11 @@ resource "proxmox_virtual_environment_container" "ts_router" {
   operating_system {
     template_file_id = proxmox_download_file.debian_lxc_template.id
     type             = "debian"
+  }
+
+  lifecycle {
+    ignore_changes  = [operating_system[0].template_file_id]
+    prevent_destroy = true
   }
 
   depends_on = [

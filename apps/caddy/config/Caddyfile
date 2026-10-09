@@ -13,7 +13,7 @@ tux.vuxnq.me, *.tux.vuxnq.me {
 
   @root host tux.vuxnq.me
   handle @root {
-    reverse_proxy host.docker.internal:8080
+    reverse_proxy glance:8080
   }
 
   @proxmox host proxmox.tux.vuxnq.me
@@ -27,27 +27,27 @@ tux.vuxnq.me, *.tux.vuxnq.me {
 
   @gatus host gatus.tux.vuxnq.me
   handle @gatus {
-    reverse_proxy host.docker.internal:8081
+    reverse_proxy gatus:8080
   }
 
   @immich host immich.tux.vuxnq.me
   handle @immich {
-    reverse_proxy host.docker.internal:2283
+    reverse_proxy immich_server:2283
   }
 
   @dufs host dufs.tux.vuxnq.me
   handle @dufs {
-    reverse_proxy host.docker.internal:5000
+    reverse_proxy dufs:5000
   }
 
   @syncthing host syncthing.tux.vuxnq.me
   handle @syncthing {
-    reverse_proxy host.docker.internal:8384
+    reverse_proxy syncthing:8384
   }
 
   @pihole host pihole.tux.vuxnq.me
   handle @pihole {
-    reverse_proxy 10.0.0.3:80
+    reverse_proxy {$PIHOLE_IP}:80
   }
 
   handle {

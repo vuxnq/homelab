@@ -1,5 +1,8 @@
 tailscale_advertise_routes: "10.0.0.0/24"
 tailscale_exit_node: true
 
-ts_router_lan_iface: eth0
+ts_router_internal_iface: eth0 # vnet0, 10.0.0.0/24
+ts_router_home_iface: eth1 # vmbr0, home lan
 ts_router_tailscale_iface: tailscale0
+
+ts_router_forwards: []

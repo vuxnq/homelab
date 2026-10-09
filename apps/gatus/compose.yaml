@@ -5,13 +5,19 @@ services:
     image: twinproduction/gatus:latest
     container_name: gatus
     restart: unless-stopped
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    expose:
+      - 8080
+    networks: [proxy]
     ports:
-      - 8081:8080
+      - 127.0.0.1:8081:8080
     volumes:
       - ./config:/config
       - /mnt/data/gatus/data:/data
     environment:
-        DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
-        BACKUP_ENDPOINT_TOKEN: ${BACKUP_ENDPOINT_TOKEN}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+      BACKUP_ENDPOINT_TOKEN: ${BACKUP_ENDPOINT_TOKEN}
+      PIHOLE_IP: ${PIHOLE_IP}
+
+networks:
+  proxy:
+    external: true

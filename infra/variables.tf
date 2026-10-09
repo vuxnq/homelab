@@ -5,7 +5,7 @@ variable "debian_lxc_url" {
 
 variable "debian_cloud_url" {
   type    = string
-  default = "https://cdimage.debian.org/cdimage/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
+  default = "https://cdimage.debian.org/cdimage/cloud/trixie/20261001-2618/debian-13-genericcloud-amd64-20261001-2618.qcow2"
 }
 
 variable "pve_ip" {
@@ -57,6 +57,11 @@ variable "net_gateway" {
 variable "ts_router_ip" {
   type    = string
   default = "10.0.0.2/24"
+}
+
+variable "ts_router_ip_lan" {
+  type    = string
+  default = "192.168.0.3/24"
 }
 
 variable "pihole_ip" {

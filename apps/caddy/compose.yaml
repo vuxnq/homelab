@@ -5,18 +5,21 @@ services:
     build: ./config
     container_name: caddy
     restart: unless-stopped
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    networks: [proxy]
     ports:
-      - 80:80
-      - 443:443
-      - 443:443/udp
+      - ${BIND_IP}:80:80
+      - ${BIND_IP}:443:443
+      - ${BIND_IP}:443:443/udp
     volumes:
       - ./config:/etc/caddy
       - /mnt/data/caddy/data:/data
       - /mnt/data/caddy/config:/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       PORKBUN_API_KEY: ${PORKBUN_API_KEY}
       PORKBUN_API_SECRET_KEY: ${PORKBUN_API_SECRET_KEY}
       ACME_EMAIL: ${ACME_EMAIL}
+      PIHOLE_IP: ${PIHOLE_IP}
+
+networks:
+  proxy:
+    external: true

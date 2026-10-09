@@ -12,6 +12,12 @@ ts_router_ip: "10.0.0.2"
 pihole_ip: "10.0.0.3"
 apps_host_ip: "10.0.0.4"
 
+ts_router_forwards:
+  - name: dufs
+    proto: tcp
+    port: 5000
+    to: "{{ apps_host_ip }}"
+
 apps:
   - name: caddy
   - name: dufs
@@ -27,6 +33,10 @@ apps:
     dirs:
       - path: /mnt/data/syncthing
       - path: /mnt/data/syncthing/config
+
+app_common_env:
+  BIND_IP: "{{ apps_host_ip }}"
+  PIHOLE_IP: "{{ pihole_ip }}"
 
 backup_pre_hooks:
   - "mkdir -p /mnt/data/immich && docker exec immich_postgres pg_dumpall -U {{ app_secrets.immich.DB_USERNAME }} > /mnt/data/immich/postgres-dump.sql && test -s /mnt/data/immich/postgres-dump.sql"

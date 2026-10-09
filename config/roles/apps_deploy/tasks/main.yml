@@ -16,16 +16,15 @@
       - "--exclude=.env"
   notify: reload caddy
 
-# dict2items turns app_secrets into a list of {key: "caddy", value: {PORKBUN_API_KEY: ..., ...}} pairs
-- name: write .env files for apps that need secrets
+- name: write .env files
   ansible.builtin.copy:
-    dest: "{{ apps_dir }}/{{ item.key }}/.env"
+    dest: "{{ apps_dir }}/{{ item.name }}/.env"
     content: |
-      {% for k, v in item.value.items() %}
+      {% for k, v in ( app_common_env | combine(app_secrets.get(item.name, {})) ).items() %}
       {{ k }}={{ v }}
       {% endfor %}
     mode: "0600"
-  loop: "{{ app_secrets | dict2items }}"
+  loop: "{{ apps }}"
   no_log: true
 
 # apps[].dirs[] -> (app, dir) pairs
@@ -37,6 +36,10 @@
     group: "{{ item.1.group | default('1000') }}"
     mode: "{{ item.1.mode | default('0755') }}"
   loop: "{{ apps | subelements('dirs', skip_missing=True) }}"
+
+- name: create shared network
+  community.docker.docker_network:
+    name: proxy
 
 - name: deploy each compose project
   community.docker.docker_compose_v2:

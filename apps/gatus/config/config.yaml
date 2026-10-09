@@ -46,7 +46,7 @@ endpoints:
       - type: discord
 
   - name: pihole-dns
-    url: "10.0.0.3:53"
+    url: "${PIHOLE_IP}:53"
     interval: 5m
     dns:
       query-name: "google.com"

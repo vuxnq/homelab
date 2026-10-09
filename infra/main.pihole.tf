@@ -34,5 +34,10 @@ resource "proxmox_virtual_environment_container" "pihole" {
     type             = "debian"
   }
 
+  lifecycle {
+    ignore_changes  = [operating_system[0].template_file_id]
+    prevent_destroy = true
+  }
+
   depends_on = [proxmox_sdn_applier.subnet_applier]
 }
