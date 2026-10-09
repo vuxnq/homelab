@@ -51,3 +51,10 @@
       url: https://syncthing.tux.vuxnq.me
       same-tab: true
       description: continuous file synchronization
+
+    ts_share:
+      name: ts share
+      icon: di:tailscale-light
+      url: https://share.vuxnq.me
+      same-tab: true
+      description: sharing node

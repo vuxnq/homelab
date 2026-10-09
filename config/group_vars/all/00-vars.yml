@@ -12,11 +12,11 @@ ts_router_ip: "10.0.0.2"
 pihole_ip: "10.0.0.3"
 apps_host_ip: "10.0.0.4"
 
-ts_router_forwards:
-  - name: dufs
-    proto: tcp
-    port: 5000
-    to: "{{ apps_host_ip }}"
+# ts_router_forwards:
+#   - name: dufs
+#     proto: tcp
+#     port: 5000
+#     to: "{{ apps_host_ip }}"
 
 apps:
   - name: caddy
@@ -33,6 +33,7 @@ apps:
     dirs:
       - path: /mnt/data/syncthing
       - path: /mnt/data/syncthing/config
+  - name: ts_share
 
 app_common_env:
   BIND_IP: "{{ apps_host_ip }}"
@@ -70,6 +71,8 @@ app_secrets:
     DB_USERNAME: ""
     DB_PASSWORD: ""
     DB_DATABASE_NAME: ""
+  ts_share:
+    TS_AUTHKEY: "{{ tailscale_authkey }}"
 
 backup_secrets:
   restic_password: ""

@@ -8,8 +8,6 @@ services:
     expose:
       - 5000
     networks: [proxy]
-    ports:
-      - ${BIND_IP}:5000:5000
     volumes:
       - /mnt/data/dufs/shared:/data/shared
       - /mnt/data/syncthing:/data/syncthing

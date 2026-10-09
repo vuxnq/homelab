@@ -37,9 +37,13 @@
     mode: "{{ item.1.mode | default('0755') }}"
   loop: "{{ apps | subelements('dirs', skip_missing=True) }}"
 
-- name: create shared network
+- name: create proxy network
   community.docker.docker_network:
     name: proxy
+
+- name: create share network
+  community.docker.docker_network:
+    name: share
 
 - name: deploy each compose project
   community.docker.docker_compose_v2:

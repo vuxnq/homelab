@@ -3,13 +3,17 @@
   acme_ca https://acme.zerossl.com/v2/DV90
 }
 
-tux.vuxnq.me, *.tux.vuxnq.me {
+(porkbun) {
   tls {
     dns porkbun {
       api_key {$PORKBUN_API_KEY}
       api_secret_key {$PORKBUN_API_SECRET_KEY}
     }
   }
+}
+
+tux.vuxnq.me, *.tux.vuxnq.me {
+  import porkbun
 
   @root host tux.vuxnq.me
   handle @root {
@@ -48,6 +52,24 @@ tux.vuxnq.me, *.tux.vuxnq.me {
   @pihole host pihole.tux.vuxnq.me
   handle @pihole {
     reverse_proxy {$PIHOLE_IP}:80
+  }
+
+  handle {
+    abort
+  }
+}
+
+share.vuxnq.me:8443, *.share.vuxnq.me:8443 {
+  import porkbun
+
+  @dufs host dufs.share.vuxnq.me
+  handle @dufs {
+    reverse_proxy dufs:5000
+  }
+
+  @immich host immich.share.vuxnq.me
+  handle @immich {
+    reverse_proxy immich_server:2283
   }
 
   handle {

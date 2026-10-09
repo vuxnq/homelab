@@ -81,6 +81,8 @@ cd ..
 - go to porkbun and set dns:
     - A record: tux.vuxnq.me -> 10.0.0.4 (apps_host)
     - CNAME record: *.tux.vuxnq.me -> tux.vuxnq.me
+    - A record: share.vuxnq.me -> [share's tailscale ip]
+    - CNAME record: *.share.vuxnq.me -> share.vuxnq.me
 
 ### backup restoration
 ```sh
