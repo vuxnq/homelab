@@ -1,0 +1,5 @@
+pve_nic_fix_drivers:
+  - e1000e
+  - e1000
+
+pve_nic_fix_flags: gso off gro off tso off tx off rx off rxvlan off txvlan off sg off

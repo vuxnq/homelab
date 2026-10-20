@@ -4,3 +4,4 @@
   hosts: proxmox
   roles:
     - pve_base
+    - pve_nic_fix

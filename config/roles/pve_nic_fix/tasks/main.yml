@@ -1,0 +1,30 @@
+---
+
+- name: find the nics that need the fix
+  ansible.builtin.set_fact:
+    pve_nic_fix_interfaces: >-
+      {{ ansible_facts['interfaces']
+         | map('regex_replace', '[-.]', '_')
+         | map('extract', ansible_facts)
+         | selectattr('module', 'defined')
+         | selectattr('module', 'in', pve_nic_fix_drivers)
+         | map(attribute='device')
+         | list }}
+
+- name: install a unit per nic that switches the offloads off
+  ansible.builtin.template:
+    src: disable-nic-offload.service.j2
+    dest: "/etc/systemd/system/disable-nic-offload-{{ item }}.service"
+    mode: "0644"
+  loop: "{{ pve_nic_fix_interfaces }}"
+  register: pve_nic_fix_units
+
+- name: enable the units and apply them
+  ansible.builtin.systemd:
+    name: "disable-nic-offload-{{ item.item }}.service"
+    daemon_reload: true
+    enabled: true
+    state: "{{ 'restarted' if item.changed else 'started' }}"
+  loop: "{{ pve_nic_fix_units.results }}"
+  loop_control:
+    label: "{{ item.item }}"

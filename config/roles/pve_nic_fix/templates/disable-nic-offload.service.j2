@@ -1,0 +1,11 @@
+[Unit]
+Description=Disable NIC offloading on {{ item }}
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ethtool -K {{ item }} {{ pve_nic_fix_flags }}
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
