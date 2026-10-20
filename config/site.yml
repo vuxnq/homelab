@@ -1,7 +1,7 @@
 ---
 
 - name: apply common config
-  hosts: all
+  hosts: all:!proxmox
   roles:
     - common
 

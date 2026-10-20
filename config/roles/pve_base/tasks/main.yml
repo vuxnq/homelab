@@ -1,0 +1,45 @@
+---
+
+- name: find the enterprise repos
+  ansible.builtin.find:
+    paths: "{{ pve_base_sources_dir }}"
+    patterns: "*.sources"
+    contains: 'enterprise\.proxmox\.com'
+    read_whole_file: true
+  register: pve_base_enterprise_repos
+
+- name: disable the enterprise repos
+  ansible.builtin.lineinfile:
+    path: "{{ item.path }}"
+    regexp: '^Enabled:'
+    insertafter: '^Types:'
+    line: "Enabled: false"
+  loop: "{{ pve_base_enterprise_repos.files }}"
+
+- name: enable the no-subscription repo
+  ansible.builtin.copy:
+    dest: "{{ pve_base_sources_dir }}/proxmox.sources"
+    content: |
+      Types: deb
+      URIs: http://download.proxmox.com/debian/pve
+      Suites: {{ ansible_facts['distribution_release'] }}
+      Components: pve-no-subscription
+      Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+
+- name: update and dist-upgrade
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
+
+- name: check if node is part of a cluster
+  ansible.builtin.stat:
+    path: /etc/pve/corosync.conf
+  register: pve_base_corosync_conf
+
+- name: disable the ha services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: false
+    state: stopped
+  loop: [pve-ha-lrm, pve-ha-crm, corosync]
+  when: pve_base_disable_ha and not pve_base_corosync_conf.stat.exists

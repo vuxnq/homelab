@@ -1,0 +1,6 @@
+---
+
+- name: configure pve host
+  hosts: proxmox
+  roles:
+    - pve_base
