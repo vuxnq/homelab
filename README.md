@@ -3,7 +3,6 @@
 
 ## requirements
 - porkbun domain, tailscale, 2+ disks, backblaze b2 bucket
-- optional: intel igpu for quicksync transcoding, VT-d enabled in bios
 
 ### tools
 ```sh

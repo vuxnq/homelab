@@ -12,6 +12,13 @@
   }
 }
 
+(app) {
+  @{args[1]} host {args[1]}.{args[0]}.vuxnq.me
+  handle @{args[1]} {
+    reverse_proxy {args[2]}
+  }
+}
+
 tux.vuxnq.me, *.tux.vuxnq.me {
   import porkbun
 
@@ -29,30 +36,11 @@ tux.vuxnq.me, *.tux.vuxnq.me {
     }
   }
 
-  @gatus host gatus.tux.vuxnq.me
-  handle @gatus {
-    reverse_proxy gatus:8080
-  }
-
-  @immich host immich.tux.vuxnq.me
-  handle @immich {
-    reverse_proxy immich_server:2283
-  }
-
-  @dufs host dufs.tux.vuxnq.me
-  handle @dufs {
-    reverse_proxy dufs:5000
-  }
-
-  @syncthing host syncthing.tux.vuxnq.me
-  handle @syncthing {
-    reverse_proxy syncthing:8384
-  }
-
-  @pihole host pihole.tux.vuxnq.me
-  handle @pihole {
-    reverse_proxy {$PIHOLE_IP}:80
-  }
+  import app tux gatus gatus:8080
+  import app tux immich immich_server:2283
+  import app tux dufs dufs:5000
+  import app tux pihole {$PIHOLE_IP}:80
+  import app tux syncthing syncthing:8384
 
   handle {
     abort
@@ -62,15 +50,8 @@ tux.vuxnq.me, *.tux.vuxnq.me {
 share.vuxnq.me:8443, *.share.vuxnq.me:8443 {
   import porkbun
 
-  @dufs host dufs.share.vuxnq.me
-  handle @dufs {
-    reverse_proxy dufs:5000
-  }
-
-  @immich host immich.share.vuxnq.me
-  handle @immich {
-    reverse_proxy immich_server:2283
-  }
+  import app share immich immich_server:2283
+  import app share dufs dufs:5000
 
   handle {
     abort
