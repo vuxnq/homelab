@@ -3,6 +3,7 @@
 
 ## requirements
 - porkbun domain, tailscale, 2+ disks, backblaze b2 bucket
+- optional: intel igpu for quicksync transcoding, VT-d enabled in bios
 
 ### tools
 ```sh
@@ -24,6 +25,7 @@ sudo dnf install opentofu ansible rsync
 ```sh
 mkdir -p ~/.ssh/keys
 ssh-keygen -t ed25519 -C "homelab" -f ~/.ssh/keys/homelab.key
+ssh-copy-id -i ~/.ssh/keys/homelab.key.pub root@<proxmox-local-ip>
 ```
 
 ```sh
@@ -61,16 +63,22 @@ tailscale_authkey: "tskey-auth-xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## usage
 ```sh
-# 1. deploy infrastructure
+# 1. prepare proxmox host
+cd config/
+ansible-galaxy collection install -r requirements.yml
+ansible-playbook host.yml --check --diff
+ansible-playbook host.yml -e pve_reboot=true
+cd ..
+
+# 2. deploy infrastructure
 cd infra/
 tofu init
 tofu plan
 tofu apply
 cd ..
 
-# 2. configure servers
+# 3. configure servers
 cd config/
-ansible-galaxy collection install -r requirements.yml
 ansible-playbook site.yml --check --diff
 ansible-playbook site.yml
 cd ..
@@ -86,6 +94,8 @@ cd ..
 
 ### backup restoration
 ```sh
+# prepare the host and deploy infrastructure first (usage steps 1 and 2)
+
 # deploy config without starting containers
 ansible-playbook site.yml --skip-tags apps_start
 

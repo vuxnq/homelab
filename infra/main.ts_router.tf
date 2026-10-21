@@ -51,8 +51,5 @@ resource "proxmox_virtual_environment_container" "ts_router" {
     prevent_destroy = true
   }
 
-  depends_on = [
-    proxmox_sdn_applier.subnet_applier,
-    terraform_data.pve_authorized_key
-  ]
+  depends_on = [proxmox_sdn_applier.subnet_applier]
 }
