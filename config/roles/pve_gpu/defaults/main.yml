@@ -1,0 +1,9 @@
+# pci addr of gpu `lspci -nn | grep -i vga`
+pve_gpu_pci_slot: "0000:00:02.0"
+
+# host drivers that must not grab the gpu (i915: intel, amdgpu: amd, nouveau/nvidia: nvidia)
+# `lspci -k | grep -EA3 'VGA|3D|Display'`
+pve_gpu_blacklist_drivers:
+  - i915
+
+pve_gpu_sysfs_devices: /sys/bus/pci/devices

@@ -1,0 +1,69 @@
+---
+
+- name: read gpu vendor
+  ansible.builtin.slurp:
+    src: "{{ pve_gpu_sysfs_devices }}/{{ pve_gpu_pci_slot }}/vendor"
+  register: gpu_vendor
+
+- name: read gpu device id
+  ansible.builtin.slurp:
+    src: "{{ pve_gpu_sysfs_devices }}/{{ pve_gpu_pci_slot }}/device"
+  register: gpu_device
+
+- name: read gpu pci class
+  ansible.builtin.slurp:
+    src: "{{ pve_gpu_sysfs_devices }}/{{ pve_gpu_pci_slot }}/class"
+  register: gpu_class
+
+- name: fail early if not display controller
+  ansible.builtin.assert:
+    that: (gpu_class.content | b64decode | trim) is match("0x03")
+    fail_msg: "{{ pve_gpu_pci_slot }} is not a display controller"
+
+- name: work out the vfio id of the gpu
+  ansible.builtin.set_fact:
+    pve_gpu_pci_ids: "{{ (gpu_vendor.content | b64decode | trim)[2:] }}:{{ (gpu_device.content | b64decode | trim)[2:] }}"
+
+- name: check that the gpu is in an iommu group
+  ansible.builtin.stat:
+    path: "{{ pve_gpu_sysfs_devices }}/{{ pve_gpu_pci_slot }}/iommu_group"
+  register: gpu_iommu_group
+
+- name: fail early when the iommu is off
+  ansible.builtin.assert:
+    that: gpu_iommu_group.stat.exists
+    fail_msg: "{{ pve_gpu_pci_slot }} has no iommu group. enable vt-d/amd-vi in bios, on kernel<6.8 add intel_iommu=on to the kernel"
+
+- name: load the vfio modules at boot
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/vfio.conf
+    content: |
+      vfio
+      vfio_iommu_type1
+      vfio_pci
+    mode: "0644"
+  notify: update initramfs
+
+- name: keep the host drivers off the gpu and bind it to vfio-pci
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/gpu-passthrough.conf
+    content: |
+      {% for driver in pve_gpu_blacklist_drivers %}
+      blacklist {{ driver }}
+      {% endfor %}
+      options vfio-pci ids={{ pve_gpu_pci_ids }}
+    mode: "0644"
+  notify: update initramfs
+
+- name: apply initramfs changes now
+  ansible.builtin.meta: flush_handlers
+
+- name: check which driver holds the gpu
+  ansible.builtin.stat:
+    path: "{{ pve_gpu_sysfs_devices }}/{{ pve_gpu_pci_slot }}/driver"
+  register: gpu_driver
+
+- name: say if a reboot is still needed
+  ansible.builtin.debug:
+    msg: "the gpu is not bound to vfio-pci yet. reboot the host `ansible-playbook host.yml -e pve_reboot=true`"
+  when: not (gpu_driver.stat.islnk | default(false) and (gpu_driver.stat.lnk_source | default('') | basename) == 'vfio-pci')

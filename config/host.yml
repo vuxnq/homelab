@@ -5,3 +5,10 @@
   roles:
     - pve_base
     - pve_nic_fix
+    - role: pve_gpu
+      when: pve_gpu_enabled | default(false) | bool
+  post_tasks:
+    - name: reboot the host
+      ansible.builtin.reboot:
+        reboot_timeout: 900
+      when: pve_reboot | default(false) | bool

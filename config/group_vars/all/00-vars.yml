@@ -12,6 +12,8 @@ ts_router_ip: "10.0.0.2"
 pihole_ip: "10.0.0.3"
 apps_host_ip: "10.0.0.4"
 
+pve_gpu_enabled: true
+
 # ts_router_forwards:
 #   - name: dufs
 #     proto: tcp
