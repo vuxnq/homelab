@@ -54,6 +54,11 @@ variable "net_gateway" {
   default = "10.0.0.1"
 }
 
+variable "gpu_pci_id" {
+  type    = string
+  default = "0000:00:02.0" # `lspci -nn | grep -i vga`
+}
+
 variable "ts_router_ip" {
   type    = string
   default = "10.0.0.2/24"
@@ -102,4 +107,9 @@ variable "apps_host_disk_data_size" {
 variable "apps_host_disk_backup_size" {
   type    = number
   default = 256
+}
+
+variable "apps_host_gpu_passthrough" {
+  type    = bool
+  default = true
 }

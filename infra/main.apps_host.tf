@@ -18,7 +18,7 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
 
   memory {
     dedicated = var.apps_host_mem_max
-    floating  = var.apps_host_mem_min
+    floating  = var.apps_host_gpu_passthrough ? 0 : var.apps_host_mem_min
   }
 
   network_device {
@@ -47,6 +47,28 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
     size              = proxmox_virtual_environment_vm.disk_holder.disk[0].size
   }
 
+  dynamic "hostpci" {
+    for_each = var.apps_host_gpu_passthrough ? [1] : []
+    content {
+      device = "hostpci0"
+      id     = var.gpu_pci_id
+    }
+  }
+
+  dynamic "vga" {
+    for_each = var.apps_host_gpu_passthrough ? [1] : []
+    content {
+      type = "none"
+    }
+  }
+
+  dynamic "serial_device" {
+    for_each = var.apps_host_gpu_passthrough ? [1] : []
+    content {
+      device = "socket"
+    }
+  }
+
   initialization {
     ip_config {
       ipv4 {
@@ -58,7 +80,7 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
   }
 
   lifecycle {
-    ignore_changes = [disk[0].file_id]
+    ignore_changes  = [disk[0].file_id]
     prevent_destroy = true
   }
 

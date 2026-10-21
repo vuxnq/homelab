@@ -1,0 +1,34 @@
+---
+
+- name: set up the gpu
+  when: apps_gpu_enabled | bool
+  block:
+    - name: look for the intel gpu
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          for dev in {{ apps_gpu_sysfs_devices }}/*; do
+            [[ "$(< "$dev/vendor")" == 0x8086 && "$(< "$dev/class")" == 0x03* ]] && basename "$dev"
+          done
+          exit 0
+      register: gpu_devices
+      changed_when: false
+      check_mode: false
+
+    - name: fail when the gpu did not reach the vm
+      ansible.builtin.assert:
+        that: gpu_devices.stdout_lines | length > 0
+        fail_msg: "no intel display controller in the vm. apply infra with apps_host_gpu_passthrough = true, or set apps_gpu_enabled to false"
+
+    - name: install intel gpu tools
+      ansible.builtin.apt:
+        name: intel-gpu-tools
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: wait for the render node
+      ansible.builtin.wait_for:
+        path: /dev/dri/renderD128
+        timeout: 30
+      when: not ansible_check_mode

@@ -1,4 +1,8 @@
 {
+  "ffmpeg": {
+    "accel": "qsv",
+    "accelDecode": true
+  },
   "storageTemplate": {
     "enabled": true,
     "template": "{{y}}/{{MM}}/{{filename}}"

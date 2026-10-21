@@ -1,0 +1,3 @@
+apps_gpu_enabled: true # infra: apps_host_gpu_passthrough
+
+apps_gpu_sysfs_devices: /sys/bus/pci/devices

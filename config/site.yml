@@ -19,6 +19,8 @@
   hosts: apps_host
   roles:
     - apps_host
+    - role: apps_gpu
+      tags: [apps_gpu]
     - docker
     - apps_deploy
     - apps_maintenance

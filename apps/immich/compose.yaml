@@ -10,6 +10,8 @@ services:
     expose:
       - 2283
     networks: [default, proxy]
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - /mnt/data/immich/data:/data
       - ./immich.json:/data/immich.json
