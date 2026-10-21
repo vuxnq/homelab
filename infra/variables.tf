@@ -5,7 +5,7 @@ variable "debian_lxc_url" {
 
 variable "debian_cloud_url" {
   type    = string
-  default = "https://cdimage.debian.org/cdimage/cloud/trixie/20261001-2618/debian-13-genericcloud-amd64-20261001-2618.qcow2"
+  default = "https://cdimage.debian.org/cdimage/cloud/trixie/20261001-2618/debian-13-generic-amd64-20261001-2618.qcow2"
 }
 
 variable "pve_ip" {
