@@ -47,6 +47,13 @@ resource "proxmox_virtual_environment_vm" "apps_host" {
     size              = proxmox_virtual_environment_vm.disk_holder.disk[0].size
   }
 
+  dynamic "usb" {
+    for_each = var.audio_usb_id != "" ? [1] : []
+    content {
+      host = var.audio_usb_id
+    }
+  }
+
   dynamic "hostpci" {
     for_each = var.apps_host_gpu_passthrough ? [1] : []
     content {

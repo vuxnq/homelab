@@ -54,6 +54,11 @@ variable "net_gateway" {
   default = "10.0.0.1"
 }
 
+variable "audio_usb_id" {
+  type    = string
+  default = "" # vendor:product `lsusb`
+}
+
 variable "gpu_pci_id" {
   type    = string
   default = "0000:00:02.0" # `lspci -nn | grep -i vga`
