@@ -12,6 +12,7 @@ services:
     volumes:
       - /mnt/data/dufs/shared:/data/shared
       - /mnt/data/syncthing:/data/${DUFS_USER}/syncthing
+      - /mnt/data/mpd/:/data/${DUFS_USER}/mpd
     command: >
       /data -A
       -a ${DUFS_USER}:${DUFS_PASSWORD}@/${DUFS_USER}:rw

@@ -27,10 +27,16 @@ apps:
       - path: /mnt/data/dufs/shared
   - name: gatus
   - name: glance
+  - name: homeassistant
   - name: immich
     backup_exclude:
       - /mnt/data/immich/postgres
       - /mnt/data/immich/ml/cache
+  - name: mpd
+    dirs:
+      - path: /mnt/data/mpd/music
+      - path: /mnt/data/mpd/db
+      - path: /mnt/data/mpd/playlists
   - name: syncthing
     dirs:
       - path: /mnt/data/syncthing

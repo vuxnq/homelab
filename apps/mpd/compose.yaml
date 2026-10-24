@@ -1,0 +1,34 @@
+name: mpd
+
+services:
+  mpd:
+    image: giof71/mpd-alsa:latest
+    container_name: mpd
+    restart: unless-stopped
+    expose:
+      - 6600
+    networks: [proxy]
+    devices:
+      - /dev/snd:/dev/snd
+    volumes:
+      - /mnt/data/mpd/music:/music
+      - /mnt/data/mpd/db:/db
+      - /mnt/data/mpd/playlists:/playlists
+      - ./config:/init:ro
+    environment:
+      USER_MODE: "Y"
+      PUID: 1000
+      PGID: 1000
+      AUDIO_GID: 29 # `getent group audio`
+      ALSA_OUTPUT_CREATE: "yes"
+      ALSA_OUTPUT_NAME: usb
+      ALSA_OUTPUT_DEVICE: hw:Audio # `aplay -l`
+      ALSA_OUTPUT_MIXER_TYPE: software
+      AUTO_UPDATE: "yes"
+    post_start:
+      - user: "1000"
+        command: ["sh", "/init/brown_noise.sh"]
+
+networks:
+  proxy:
+    external: true

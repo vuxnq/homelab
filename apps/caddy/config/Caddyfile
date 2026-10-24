@@ -37,6 +37,9 @@ tux.vuxnq.me, *.tux.vuxnq.me {
 
   import app tux dufs dufs:5000
   import app tux gatus gatus:8080
+  import app tux home homeassistant:8123 {
+    header_up -X-Forwarded-For
+  }
   import app tux immich immich_server:2283
   import app tux pihole {$PIHOLE_IP}:80
   import app tux syncthing syncthing:8384

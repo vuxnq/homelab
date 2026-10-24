@@ -28,6 +28,13 @@
       same-tab: true
       description: dashboard
 
+    homeassistant:
+      name: home assistant
+      icon: sh:home-assistant
+      url: https://home.tux.vuxnq.me
+      same-tab: true
+      description: home automation
+
     immich_server:
       name: immich
       icon: sh:immich
@@ -44,6 +51,11 @@
     immich_redis:
       name: redis
       parent: immich
+
+    mpd:
+      name: mpd
+      icon: sh:music-player-daemon
+      description: music player daemon
 
     syncthing:
       name: syncthing

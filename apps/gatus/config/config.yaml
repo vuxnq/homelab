@@ -21,27 +21,43 @@ external-endpoints:
         success-threshold: 1
 
 endpoints:
-  - name: immich
-    url: "https://immich.tux.vuxnq.me"
-    interval: 2m
+  - name: caddy-cert
+    url: "https://tux.vuxnq.me"
+    interval: 1h
     conditions:
-      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 240h"
     alerts:
       - type: discord
 
   - name: dufs
-    url: "https://dufs.tux.vuxnq.me"
+    url: "http://dufs:5000"
     interval: 2m
     conditions:
       - "[STATUS] == 200"
     alerts:
       - type: discord
 
-  - name: syncthing
-    url: "https://syncthing.tux.vuxnq.me"
+  - name: home-assistant
+    url: "http://homeassistant:8123"
     interval: 2m
     conditions:
       - "[STATUS] == 200"
+    alerts:
+      - type: discord
+
+  - name: immich
+    url: "http://immich_server:2283"
+    interval: 2m
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: discord
+
+  - name: mpd-tcp
+    url: "tcp://mpd:6600"
+    interval: 2m
+    conditions:
+      - "[CONNECTED] == true"
     alerts:
       - type: discord
 
@@ -56,10 +72,18 @@ endpoints:
     alerts:
       - type: discord
 
-  - name: caddy-cert-tux
-    url: "https://tux.vuxnq.me"
-    interval: 1h
+  - name: syncthing
+    url: "http://syncthing:8384"
+    interval: 2m
     conditions:
-      - "[CERTIFICATE_EXPIRATION] > 240h"
+      - "[STATUS] == 200"
+    alerts:
+      - type: discord
+
+  - name: ts-share-caddy-tcp
+    url: "tcp://caddy:8443"
+    interval: 2m
+    conditions:
+      - "[CONNECTED] == true"
     alerts:
       - type: discord

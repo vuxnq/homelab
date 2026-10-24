@@ -1,0 +1,13 @@
+default_config:
+
+homeassistant:
+  packages: !include_dir_named declare/packages
+
+lovelace:
+  dashboards:
+    main-home:
+      mode: yaml
+      filename: declare/dashboards/home.yaml
+      title: Home
+      icon: mdi:view-dashboard
+      show_in_sidebar: true

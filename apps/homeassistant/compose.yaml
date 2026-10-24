@@ -1,0 +1,20 @@
+name: homeassistant
+
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    expose:
+      - 8123
+    networks: [proxy]
+    volumes:
+      - /mnt/data/homeassistant/config:/config
+      - ./config/configuration.yaml:/config/configuration.yaml:ro
+      - ./config/declare:/config/declare:ro
+    environment:
+      TZ: Europe/Prague
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,11 @@
+type: tile
+name: Brown Noise
+icon: mdi:waveform
+entity: media_player.music_player_daemon
+tap_action:
+  action: perform-action
+  perform_action: switch.toggle
+  target:
+    entity_id: switch.brown_noise
+features:
+  - type: "media-player-volume-slider"

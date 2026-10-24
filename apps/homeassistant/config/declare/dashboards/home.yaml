@@ -1,0 +1,12 @@
+title: Home
+views:
+  - title: Home
+    path: home
+    sections:
+      - type: grid
+        cards:
+        - type: clock
+          clock_size: medium
+          time_format: "24"
+          show_seconds: true
+        - !include cards/brown_noise.yaml

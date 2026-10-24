@@ -1,0 +1,33 @@
+template:
+  - switch:
+      - name: Brown Noise
+        unique_id: brown_noise
+        icon: mdi:waveform
+        state: "{{ is_state('media_player.music_player_daemon', 'playing') }}"
+        turn_on:
+          - action: media_player.repeat_set
+            target:
+              entity_id: media_player.music_player_daemon
+            data:
+              repeat: one
+          - action: media_player.play_media
+            target:
+              entity_id: media_player.music_player_daemon
+            data:
+              media_content_type: music
+              media_content_id: brown_noise.flac
+        turn_off:
+          - action: media_player.media_stop
+            target:
+              entity_id: media_player.music_player_daemon
+
+automation:
+  - id: brown_noise_off_7am
+    alias: Brown Noise off at 7
+    triggers:
+      - trigger: time
+        at: "07:00:00"
+    actions:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.brown_noise
