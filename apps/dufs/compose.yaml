@@ -4,15 +4,18 @@ services:
   dufs:
     image: sigoden/dufs:latest
     container_name: dufs
+    restart: unless-stopped
     user: 1000:1000
     expose:
       - 5000
     networks: [proxy]
     volumes:
       - /mnt/data/dufs/shared:/data/shared
-      - /mnt/data/syncthing:/data/syncthing
-    command: /data -A -a ${DUFS_USER}:${DUFS_PASSWORD}@/syncthing:rw -a @/shared:rw
-    restart: unless-stopped
+      - /mnt/data/syncthing:/data/${DUFS_USER}/syncthing
+    command: >
+      /data -A
+      -a ${DUFS_USER}:${DUFS_PASSWORD}@/${DUFS_USER}:rw
+      -a @/shared:rw
 
 networks:
   proxy:

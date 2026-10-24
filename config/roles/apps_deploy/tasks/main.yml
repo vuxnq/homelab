@@ -5,16 +5,61 @@
     name: rsync
     state: present
 
+- name: create the apps directory
+  ansible.builtin.file:
+    path: "{{ apps_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: find deployed compose projects
+  ansible.builtin.find:
+    paths: "{{ apps_dir }}"
+    patterns: ["compose.yaml", "compose.yml"]
+    recurse: true
+    depth: 2
+  register: apps_deployed
+
+- name: stop apps that are not listed
+  community.docker.docker_compose_v2:
+    project_src: "{{ item.path | dirname }}"
+    state: absent
+  loop: "{{ apps_deployed.files }}"
+  loop_control:
+    label: "{{ item.path | dirname | basename }}"
+  when:
+    - item.path | dirname | dirname == apps_dir
+    - item.path | dirname | basename not in (apps | map(attribute='name'))
+
+- name: find app directories
+  ansible.builtin.find:
+    paths: "{{ apps_dir }}"
+    file_type: directory
+    recurse: false
+  register: apps_dirs
+
+- name: remove directories that are not listed
+  ansible.builtin.file:
+    path: "{{ apps_dir }}/{{ item }}"
+    state: absent
+  loop: "{{ apps_dirs.files | map(attribute='path') | map('basename') | difference(apps | map(attribute='name')) }}"
+
 - name: sync apps directory to host
   ansible.posix.synchronize:
-    src: "{{ playbook_dir }}/../apps/"
-    dest: "{{ apps_dir }}/"
+    src: "{{ playbook_dir }}/../apps/{{ item.name }}/"
+    dest: "{{ apps_dir }}/{{ item.name }}/"
     delete: true
     use_ssh_args: true
     rsync_opts:
       - "--exclude=.git"
       - "--exclude=.env"
-  notify: reload caddy
+  loop: "{{ apps }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: apps_sync
+
+- name: find which apps changed
+  ansible.builtin.set_fact:
+    apps_changed: "{{ apps_sync.results | selectattr('changed') | map(attribute='item.name') | list }}"
 
 - name: write .env files
   ansible.builtin.copy:
@@ -49,5 +94,13 @@
   community.docker.docker_compose_v2:
     project_src: "{{ apps_dir }}/{{ item.name }}"
     state: present
+    recreate: "{{ 'always' if item.name in apps_changed else 'auto' }}"
   loop: "{{ apps }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [apps_start]
+
+- name: reload caddy
+  ansible.builtin.command: docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+  when: "'caddy' in apps_changed"
   tags: [apps_start]

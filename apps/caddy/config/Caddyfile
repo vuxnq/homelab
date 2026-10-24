@@ -15,7 +15,9 @@
 (app) {
   @{args[1]} host {args[1]}.{args[0]}.vuxnq.me
   handle @{args[1]} {
-    reverse_proxy {args[2]}
+    reverse_proxy {args[2]} {
+      {block}
+    }
   }
 }
 
@@ -27,18 +29,15 @@ tux.vuxnq.me, *.tux.vuxnq.me {
     reverse_proxy glance:8080
   }
 
-  @proxmox host proxmox.tux.vuxnq.me
-  handle @proxmox {
-    reverse_proxy https://10.0.0.1:8006 {
-      transport http {
-        tls_insecure_skip_verify
-      }
+  import app tux proxmox https://10.0.0.1:8006 {
+    transport http {
+      tls_insecure_skip_verify
     }
   }
 
+  import app tux dufs dufs:5000
   import app tux gatus gatus:8080
   import app tux immich immich_server:2283
-  import app tux dufs dufs:5000
   import app tux pihole {$PIHOLE_IP}:80
   import app tux syncthing syncthing:8384
 
